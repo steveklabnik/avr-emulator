@@ -1,7 +1,7 @@
 import { LOAD_PROGRAM, PERFORM_NEXT} from '../actions/DebuggerActions';
 
 const initialState = {
-  registers: [],
+  registers: ['init'],
   stack: []
 };
 

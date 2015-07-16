@@ -1,24 +1,22 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { createStore, combineReducers } from 'redux';
-import { Provider, Connector } from 'react-redux';
+import { Provider } from 'react-redux';
 
+import EmulatorApp from './containers/EmulatorApp';
 import * as reducers from './reducers';
+
 const reducer = combineReducers(reducers);
 const store = createStore(reducer);
 
-var EmulatorApp = React.createClass({
+var EmulatorProvider = React.createClass({
   render: function() {
     return (
       <Provider store={store}>
-        {() => (
-          <Connector>
-            {() => <div>hi</div>}
-          </Connector>
-        )}
+        {() => <EmulatorApp />}
       </Provider>
     );
   }
 });
 
-ReactDOM.render(<EmulatorApp />, document.getElementById('emulator'));
+ReactDOM.render(<EmulatorProvider />, document.getElementById('emulator'));
