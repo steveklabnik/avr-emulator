@@ -1,17 +1,24 @@
 import React, { PropTypes } from 'react';
 
-export default class Counter {
+export default class DebuggerButtons {
+  programIsLoaded() {
+    const { emulator } = this.props;
+    return emulator.stack.length > 0;
+  }
 
   render() {
-    const { performNextOperation } = this.props;
+    const { loadProgram, performNextOperation } = this.props;
     return (
       <p>
-        <button onClick={performNextOperation}>Step</button>
+        { this.programIsLoaded() ? <button onClick={performNextOperation}>Step</button> : null }
+        <button onClick={loadProgram}>Load Program</button>
       </p>
     );
   }
 }
-Counter.propTypes = {
-  performNextOperation: PropTypes.func.isRequired
+DebuggerButtons.propTypes = {
+  performNextOperation: PropTypes.func.isRequired,
+  loadProgram: PropTypes.func.isRequired,
+  emulator: PropTypes.object.isRequired
 };
 

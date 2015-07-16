@@ -12,7 +12,8 @@ export default class EmulatorApp {
       <Connector>
         {({ emulator, dispatch }) =>
           <div>
-            <DebuggerButtons {...bindActionCreators(DebuggerActions, dispatch)} />
+            <DebuggerButtons emulator={emulator}
+              {...bindActionCreators(DebuggerActions, dispatch)} />
             <RegisterState registers={emulator.registers} />
             <ProgramStack stack={emulator.stack} />
           </div>
