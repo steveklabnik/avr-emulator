@@ -10,12 +10,12 @@ export default function emulator(state = initialState, action) {
     case LOAD_PROGRAM:
       return {
        registers: [],
-       stack: ['1', '2']
+       stack: [1, 2]
       };
     case PERFORM_NEXT:
       return {
        registers: [...state.registers, 'hi'],
-       stack: ['1', '2']
+       stack: [1, 2]
       }
     default:
       return state;
