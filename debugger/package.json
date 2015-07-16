@@ -1,0 +1,10 @@
+{
+  "name": "realscout-avr",
+  "dependencies": {
+    "react": "^0.14.0-beta1",
+    "react-dom": "^0.14.0-beta1",
+    "redux": "1.0.0-rc"
+  },
+  "devDependencies": {
+  }
+}
