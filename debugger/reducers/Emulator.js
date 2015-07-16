@@ -14,7 +14,7 @@ export default function emulator(state = initialState, action) {
       };
     case PERFORM_NEXT:
       return {
-       registers: state.registers.push('hi'),
+       registers: [...state.registers, 'hi'],
        stack: ['1', '2']
       }
     default:
