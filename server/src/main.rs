@@ -1,6 +1,10 @@
 extern crate websocket;
+extern crate rustc_serialize;
+
+mod emulator;
 
 use std::thread;
+
 use websocket::{Server, Message, Sender, Receiver};
 use websocket::header::WebSocketProtocol;
 
@@ -54,7 +58,8 @@ fn main() {
 					}
 					_ => {
             // this is where we are echoing back the message sent to us
-            sender.send_message(message).unwrap();
+            let encoded = Message::Text(emulator::serialize());
+            sender.send_message(encoded).unwrap();
           }
 				}
 			}

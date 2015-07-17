@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["Chris Conley <pair+chris@realscout.com>"]
 [dependencies]
 websocket = "~0.12.2"
+rustc-serialize = "0.3"
