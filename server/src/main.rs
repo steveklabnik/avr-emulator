@@ -37,8 +37,16 @@ fn main() {
 
             println!("Connection from {}", ip);
 
-            let message = Message::Text("Hello".to_string());
-            client.send_message(message).unwrap();
+            let emulator_instance = emulator::Emulator {
+                data_memory: emulator::AvrDataMemory {
+                    registers: vec![0,2,3],
+                    io: vec![],
+                    ram: vec![]
+                }
+            };
+
+            let encoded = Message::Text(emulator::serialize(&emulator_instance));
+            client.send_message(encoded).unwrap();
 
             let (mut sender, mut receiver) = client.split();
 
@@ -56,17 +64,15 @@ fn main() {
                         let message = Message::Pong(data);
                         sender.send_message(message).unwrap();
                     }
+                    Message::Text(data) => {
+                        let new_emulator = emulator::perform_instruction(&emulator_instance, data);
+                        let encoded = Message::Text(emulator::serialize(&emulator_instance));
+                        sender.send_message(encoded).unwrap();
+                    }
                     _ => {
                         // this is where we are echoing back the message sent to us
-                        let emulator_instance = emulator::Emulator {
-                            data_memory: emulator::AvrDataMemory {
-                                registers: vec![0,2,3],
-                                io: vec![],
-                                ram: vec![]
-                            }
-                        };
-                        let encoded = Message::Text(emulator::serialize(emulator_instance));
-                        sender.send_message(encoded).unwrap();
+                        let message = Message::Text("Should not be here".to_string());
+                        sender.send_message(message).unwrap();
                     }
                 }
             }

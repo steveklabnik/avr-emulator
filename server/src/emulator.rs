@@ -14,9 +14,9 @@ pub struct Emulator {
     pub data_memory: AvrDataMemory
 }
 
-pub fn serialize(emulator: Emulator) -> String {
+pub fn serialize(emulator: &Emulator) -> String {
     // Serialize using `json::encode`
-    json::encode(&emulator).unwrap()
+    json::encode(emulator).unwrap()
 }
 
 
@@ -37,21 +37,22 @@ fn get_register_index(operand: &String) -> usize {
     let index = operand.replace("r", "").parse::<usize>();
     index.unwrap()
 }
-pub fn add(emulator: Emulator, rd: &String, rr: &String) -> Emulator {
+pub fn add(emulator: &Emulator, rd: &String, rr: &String) -> Emulator {
     let rd_index = get_register_index(rd);
     let rr_index = get_register_index(rr);
 
-    let registers = emulator.data_memory.registers;
+    let registers = &emulator.data_memory.registers;
     let result = registers[rd_index] + registers[rr_index];
 
     let mut new_registers = registers.to_vec();
     new_registers[rd_index] = result;
 
+    let data_memory = &emulator.data_memory;
     Emulator {
         data_memory: AvrDataMemory {
             registers: new_registers,
-            io: emulator.data_memory.io,
-            ram: emulator.data_memory.ram
+            io: data_memory.io.to_vec(),
+            ram: data_memory.ram.to_vec()
         }
     }
 }
@@ -59,9 +60,10 @@ pub fn add(emulator: Emulator, rd: &String, rr: &String) -> Emulator {
 // This is a reducer just like redux!
 // (emulator, instruction) => (emulator)
 // (state, action) => (state)
-pub fn perform_instruction(emulator: Emulator, instruction_line: String) -> Emulator {
+pub fn perform_instruction(emulator: &Emulator, instruction_line: String) -> Emulator {
+    println!("instruction line: {}", instruction_line);
     let instruction = parse_instruction(instruction_line);
-    add(emulator, &instruction.operands[0], &instruction.operands[1])
+    add(&emulator, &instruction.operands[0], &instruction.operands[1])
 }
 
 #[test]
@@ -74,7 +76,7 @@ fn can_add() {
         }
     };
     let instruction_line = "add r1,r2".to_string();
-    let next_emulator = perform_instruction(emulator, instruction_line);
+    let next_emulator = perform_instruction(&emulator, instruction_line);
     assert_eq!(5, next_emulator.data_memory.registers[1]);
     assert_eq!(3, next_emulator.data_memory.registers[2]);
 }
@@ -88,5 +90,5 @@ fn it_works() {
             ram: vec![]
         }
     };
-    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(emulator));
+    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
 }
