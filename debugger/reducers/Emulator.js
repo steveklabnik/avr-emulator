@@ -13,9 +13,16 @@ export default function emulator(state = initialState, action) {
        stack: [1, 2]
       };
     case PERFORM_NEXT:
+      if (action.event.data !== 'Hello') {
+        debugger
+        var data = JSON.parse(action.event.data)
+        state.registers = data.registers;
+        state.stack = data.stack;
+      }
       return {
-       registers: [...state.registers, 'hi'],
-       stack: [1, 2]
+       registers: state.registers,
+       // This should be state.stack 
+       stack: [1,2]
       };
     default:
       return state;

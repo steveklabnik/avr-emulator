@@ -9,7 +9,7 @@ export default class ProgramStack {
         <h2>Stack</h2>
         <ul>
           {stack.map(memoryAddress =>
-            <li>{memoryAddress}</li>
+            <li key={memoryAddress} >{memoryAddress}</li>
           )}
         </ul>
       </div>

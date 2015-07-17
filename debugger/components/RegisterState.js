@@ -4,6 +4,7 @@ export default class RegisterState {
 
   render() {
     const { registers } = this.props;
+    
     return (
       <div>
         <h2>Registers</h2>
