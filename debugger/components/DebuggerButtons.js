@@ -22,4 +22,3 @@ DebuggerButtons.propTypes = {
   requestProgram: PropTypes.func.isRequired,
   emulator: PropTypes.object.isRequired
 };
-

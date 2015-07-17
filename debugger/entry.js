@@ -1,5 +1,5 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
+
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -30,4 +30,4 @@ var EmulatorProvider = React.createClass({
   }
 });
 
-ReactDOM.render(<EmulatorProvider />, document.getElementById('emulator'));
+React.render(<EmulatorProvider />, document.getElementById('emulator'));
