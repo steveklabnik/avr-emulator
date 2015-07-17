@@ -11,4 +11,8 @@ This will compile the server and run it
 
 ### Testing
 
-Haven't gotten there yet
+```
+cargo test
+```
+
+See [Rust's Docs](https://doc.rust-lang.org/book/testing.html) for more information on how to write tests.

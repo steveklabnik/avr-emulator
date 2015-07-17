@@ -17,3 +17,8 @@ pub fn serialize() -> String {
   // Serialize using `json::encode`
   json::encode(&object).unwrap()
 }
+
+#[test]
+fn it_works() {
+  assert_eq!("{\"stack\":\"homura\",\"registers\":[2,3,4,5]}", serialize());
+}
