@@ -1,38 +1,92 @@
+use std::collections::HashMap;
 use rustc_serialize::json;
 
-// Automatically generate `RustcDecodable` and `RustcEncodable` trait
-// implementations
+
+#[derive(RustcDecodable, RustcEncodable)]
+pub struct AvrDataMemory {
+    pub registers: Vec<u8>,
+    pub io: Vec<u8>,
+    pub ram: Vec<u8>
+}
+
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Emulator {
-    dataSpace: String,
-    registerFile: Vec<u8>,
-    ioMemory: Vec<u8>,
-    program: Vec<u8>,
-    stack: u16,
-    stackPointer: u16
+    pub data_memory: AvrDataMemory
 }
 
-pub fn serialize() -> String {
-  let object = Emulator {
-    stack: "homura".to_string(),
-    registers: vec![2,3,4,5],
-  };
-
-  // Serialize using `json::encode`
-  json::encode(&object).unwrap()
+pub fn serialize(emulator: Emulator) -> String {
+    // Serialize using `json::encode`
+    json::encode(&emulator).unwrap()
 }
-//#[test]
-//fn can_add() {
-  //let emulator = Emulator {
-    //registerFile: vec![0,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,]
-  //};
-  //let operation = "add r1,r2";
-  //let result = add(emulator, "r1,r2");
-  //assert_eq!(5, emulator.registerFile[1]);
-  //assert_eq!(3, emulator.registerFile[2]);
-//}
+
+
+pub struct Instruction {
+    label: String,
+    operation: String,
+    operands: Vec<String>
+}
+
+pub fn parse_instruction(instruction: String) -> Instruction {
+    Instruction {
+        label: "".to_string(),
+        operation: "add".to_string(),
+        operands: vec!["r1".to_string(),"r2".to_string()]
+    }
+}
+fn get_register_index(operand: &String) -> usize {
+    let index = operand.replace("r", "").parse::<usize>();
+    index.unwrap()
+}
+pub fn add(emulator: Emulator, rd: &String, rr: &String) -> Emulator {
+    let rd_index = get_register_index(rd);
+    let rr_index = get_register_index(rr);
+
+    let registers = emulator.data_memory.registers;
+    let result = registers[rd_index] + registers[rr_index];
+
+    let mut new_registers = registers.to_vec();
+    new_registers[rd_index] = result;
+
+    Emulator {
+        data_memory: AvrDataMemory {
+            registers: new_registers,
+            io: emulator.data_memory.io,
+            ram: emulator.data_memory.ram
+        }
+    }
+}
+
+// This is a reducer just like redux!
+// (emulator, instruction) => (emulator)
+// (state, action) => (state)
+pub fn perform_instruction(emulator: Emulator, instruction_line: String) -> Emulator {
+    let instruction = parse_instruction(instruction_line);
+    add(emulator, &instruction.operands[0], &instruction.operands[1])
+}
+
+#[test]
+fn can_add() {
+    let emulator = Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![0,2,3],
+            io: vec![],
+            ram: vec![]
+        }
+    };
+    let instruction_line = "add r1,r2".to_string();
+    let next_emulator = perform_instruction(emulator, instruction_line);
+    assert_eq!(5, next_emulator.data_memory.registers[1]);
+    assert_eq!(3, next_emulator.data_memory.registers[2]);
+}
 
 #[test]
 fn it_works() {
-  assert_eq!("{\"stack\":\"homura\",\"registers\":[2,3,4,5]}", serialize());
+    let emulator = Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![0,2,3],
+            io: vec![],
+            ram: vec![]
+        }
+    };
+    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(emulator));
 }

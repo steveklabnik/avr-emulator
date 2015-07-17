@@ -58,7 +58,14 @@ fn main() {
                     }
                     _ => {
                         // this is where we are echoing back the message sent to us
-                        let encoded = Message::Text(emulator::serialize());
+                        let emulator_instance = emulator::Emulator {
+                            data_memory: emulator::AvrDataMemory {
+                                registers: vec![0,2,3],
+                                io: vec![],
+                                ram: vec![]
+                            }
+                        };
+                        let encoded = Message::Text(emulator::serialize(emulator_instance));
                         sender.send_message(encoded).unwrap();
                     }
                 }
