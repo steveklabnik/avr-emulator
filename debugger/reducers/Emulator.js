@@ -16,7 +16,7 @@ export default function emulator(state = initialState, action) {
       return {
        registers: [...state.registers, 'hi'],
        stack: [1, 2]
-      }
+      };
     default:
       return state;
   }

@@ -8,18 +8,18 @@ export default class DebuggerButtons {
   }
 
   render() {
-    const { loadProgram, performNextOperation } = this.props;
+    const { requestProgram, requestNextOperation } = this.props;
     return (
       <p>
-        { this.programIsLoaded() && <button onClick={performNextOperation}>Step</button> }
-        <button onClick={loadProgram}>Load Program</button>
+        { this.programIsLoaded() && <button onClick={requestNextOperation}>Step</button> }
+        <button onClick={requestProgram}>Load Program</button>
       </p>
     );
   }
 }
 DebuggerButtons.propTypes = {
-  performNextOperation: PropTypes.func.isRequired,
-  loadProgram: PropTypes.func.isRequired,
+  requestNextOperation: PropTypes.func.isRequired,
+  requestProgram: PropTypes.func.isRequired,
   emulator: PropTypes.object.isRequired
 };
 

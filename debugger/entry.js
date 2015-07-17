@@ -1,26 +1,24 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import EmulatorApp from './containers/EmulatorApp';
 import * as reducers from './reducers';
+import websocketMiddleware from './middleware/websocket';
+
+import { socket } from './socket'
 
 const reducer = combineReducers(reducers);
-const store = createStore(reducer);
+const store = applyMiddleware(websocketMiddleware)(createStore)(reducer);
 
-var socket = new WebSocket("ws://127.0.0.1:2794", "rust-websocket");
 socket.onmessage = function (event) {
-  console.log(event);
+  console.log('received from websocket', event);
   store.dispatch({
-    type: 'MESSAGE_RECEIVED',
+    type: 'performNext',
     event: event
   });
 };
-
-setTimeout(() => {
-  socket.send('hi');
-}, 300);
 
 var EmulatorProvider = React.createClass({
   render: function() {
