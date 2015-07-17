@@ -8,8 +8,10 @@ See corresponding READMEs for each directory
 ### Running
 
 ``` bash
-open ./debugger/index.html
+cd debugger
+npm start
 cd server
 cargo run
+navigate to: localhost:3000
 ```
 

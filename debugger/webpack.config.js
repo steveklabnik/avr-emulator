@@ -1,16 +1,34 @@
+// Needed to run plugins
+var path = require('path');
+var webpack = require('webpack');
+
+// Might want to consider adding jsx-loader to the loaders
+// See: http://gaearon.github.io/react-hot-loader/getstarted/ example repo at the bottom
+
 module.exports = {
-    entry: "./entry.js",
+    entry: [
+      'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
+      'webpack/hot/only-dev-server',
+      './entry.js' // Your appʼs entry point
+    ],
     output: {
-        path: __dirname,
+        path: path.join(__dirname, 'dist'),
         filename: "bundle.js"
+    },
+    resolve: {
+      extensions: ['', '.js', '.jsx']
     },
     module: {
         loaders: [
           {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
-            loader: 'babel?stage=1'
+            loaders: ['react-hot', 'babel?stage=1']
           }
         ]
-    }
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin()
+    ]
 };
