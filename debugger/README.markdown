@@ -19,4 +19,13 @@ open ./index.html
 
 ### Testing
 
-Haven't gotten there yet
+_This is not working currently because we're using React 0.14 and they [accidentally dropped the TestUtils package](https://github.com/facebook/react/issues/4279)._
+
+*Options*
+
+* Revert to React 0.13
+* Find the TestUtils source and copy it into our repo
+
+```
+npm test
+```
