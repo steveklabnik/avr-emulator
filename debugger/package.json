@@ -1,9 +1,11 @@
 {
   "name": "realscout-avr",
   "dependencies": {
+    "node-sass": "^3.2.0",
     "react": "0.13.3",
     "react-redux": "^0.2.2",
-    "redux": "1.0.0-rc"
+    "redux": "1.0.0-rc",
+    "sass-loader": "^1.0.2"
   },
   "devDependencies": {
     "babel": "^5.6.23",
@@ -32,6 +34,6 @@
   },
   "scripts": {
     "test": "BABEL_JEST_STAGE=1 jest",
-    "start": "node server.js"
+    "start": "node server.js && sass --watch src/stylesheets/main.scss:dist/stylesheets/main.css"
   }
 }
