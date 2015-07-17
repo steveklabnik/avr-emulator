@@ -7,11 +7,8 @@ Use Mac installer on http://www.rust-lang.org/install.html
 ```
 cargo run
 ```
-
 This will compile the server and run it
 
-### Communicating with frontend
+### Testing
 
-```
-open ./index.html
-```
+Haven't gotten there yet
