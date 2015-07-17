@@ -4,6 +4,7 @@ export const REQUEST_PROGRAM = 'requestProgram';
 export const REQUEST_NEXT_OPERATION = 'requestNextOperation';
 export const LOAD_PROGRAM = 'loadProgram';
 export const PERFORM_NEXT = 'performNext';
+export const PERFORM_INSTRUCTIONS = 'performInstructions';
 
 export function requestProgram() {
   return {
@@ -31,4 +32,14 @@ export function performNextOperation() {
   return {
     type: PERFORM_NEXT
   };
+}
+
+export function performInstructions(e) {
+  e.preventDefault();
+  var programInstructions = e.target.value;
+  return {
+    type: PERFORM_INSTRUCTIONS,
+    socketMessageName: 'PERFORM_INSTRUCTIONS',
+    socketMessage: {programInstructions: programInstructions}
+  }
 }
