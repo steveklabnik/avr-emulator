@@ -13,7 +13,9 @@
     "babel-loader": "^5.3.2",
     "jest-cli": "^0.4.15",
     "node-libs-browser": "^0.5.2",
-    "webpack": "^1.10.1"
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1",
+    "react-hot-loader": "^1.2.8"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
@@ -30,6 +32,7 @@
     ]
   },
   "scripts": {
-    "test": "BABEL_JEST_STAGE=1 jest"
+    "test": "BABEL_JEST_STAGE=1 jest",
+    "start": "node server.js"
   }
 }
