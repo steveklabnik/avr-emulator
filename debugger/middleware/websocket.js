@@ -6,7 +6,8 @@ export default function websocketMiddleware({ dispatch, getState }) {
     if (!socketMessageName) {
       return next(action);
     }
-    socket.send('requesting: ' + socketMessageName);
+    console.log(socketMessage);
+    socket.send(socketMessage.programInstructions);
   };
 }
 

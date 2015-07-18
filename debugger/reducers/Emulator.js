@@ -16,7 +16,7 @@ export default function emulator(state = initialState, action) {
         var data = JSON.parse(action.event.data).data_memory;
       return {
        registers: data.registers,
-       // This should be state.stack 
+       // This should be state.stack
        stack: data.io
       };
     default:

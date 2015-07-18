@@ -34,9 +34,7 @@ export function performNextOperation() {
   };
 }
 
-export function performInstructions(e) {
-  e.preventDefault();
-  var programInstructions = e.target.value;
+export function performInstructions(programInstructions) {
   return {
     type: PERFORM_INSTRUCTIONS,
     socketMessageName: 'PERFORM_INSTRUCTIONS',

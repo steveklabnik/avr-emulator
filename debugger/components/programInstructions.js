@@ -1,19 +1,26 @@
 import React, { PropTypes } from 'react';
 
-export default class ProgramInstructions {
-  render() {
-    const { performInstructions } = this.props;
+export default class ProgramInstructions extends React.Component {
 
+  handleInstructionChange = (e) => {
+    this.setState({instruction: e.target.value});
+  }
+
+  handleEvaluateRequest = (e) => {
+    const { performInstructions } = this.props;
+    performInstructions(this.state.instruction);
+  }
+
+  render() {
     return (
       <div className="program-input-container">
-        <form onSubmit={performInstructions} > 
-          <input id="program-type" />
-          <button id="submit-instructions" onClick={performInstructions} >Evaluate</button>
-        </form>
+        <input ref="program-type" onChange={this.handleInstructionChange} />
+        <button id="submit-instructions" onClick={this.handleEvaluateRequest}>Evaluate</button>
       </div>
     );
   }
+
 }
-// ProgramInstructions.propTypes = {
-//   registers: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-// };
+ ProgramInstructions.propTypes = {
+   performInstructions: React.PropTypes.func.isRequired
+ };
