@@ -27,10 +27,16 @@ pub struct Instruction {
 }
 
 pub fn parse_instruction(instruction: String) -> Instruction {
+    let mut instruction_iterator = instruction.split(" ");
+    let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
+
+    let mut operands_iterator = instruction_vector[1].split(",");
+    let operands_vector = operands_iterator.map(|x| x.to_string()).collect::<Vec<String>>();
+
     Instruction {
         label: "".to_string(),
-        operation: "add".to_string(),
-        operands: vec!["r1".to_string(),"r2".to_string()]
+        operation: instruction_vector[0].to_string(),
+        operands: operands_vector
     }
 }
 fn get_register_index(operand: &String) -> usize {
@@ -75,9 +81,9 @@ fn can_add() {
             ram: vec![]
         }
     };
-    let instruction_line = "add r1,r2".to_string();
+    let instruction_line = "add r0,r2".to_string();
     let next_emulator = perform_instruction(&emulator, instruction_line);
-    assert_eq!(5, next_emulator.data_memory.registers[1]);
+    assert_eq!(3, next_emulator.data_memory.registers[0]);
     assert_eq!(3, next_emulator.data_memory.registers[2]);
 }
 

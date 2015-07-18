@@ -37,9 +37,9 @@ fn main() {
 
             println!("Connection from {}", ip);
 
-            let emulator_instance = emulator::Emulator {
+            let mut emulator_instance = emulator::Emulator {
                 data_memory: emulator::AvrDataMemory {
-                    registers: vec![0,2,3],
+                    registers: vec![0,2,3,0,0,0,1,5],
                     io: vec![],
                     ram: vec![]
                 }
@@ -65,8 +65,8 @@ fn main() {
                         sender.send_message(message).unwrap();
                     }
                     Message::Text(data) => {
-                        let new_emulator = emulator::perform_instruction(&emulator_instance, data);
-                        let encoded = Message::Text(emulator::serialize(&new_emulator));
+                        emulator_instance = emulator::perform_instruction(&emulator_instance, data);
+                        let encoded = Message::Text(emulator::serialize(&emulator_instance));
                         sender.send_message(encoded).unwrap();
                     }
                     _ => {
