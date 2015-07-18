@@ -66,7 +66,7 @@ fn main() {
                     }
                     Message::Text(data) => {
                         let new_emulator = emulator::perform_instruction(&emulator_instance, data);
-                        let encoded = Message::Text(emulator::serialize(&emulator_instance));
+                        let encoded = Message::Text(emulator::serialize(&new_emulator));
                         sender.send_message(encoded).unwrap();
                     }
                     _ => {
