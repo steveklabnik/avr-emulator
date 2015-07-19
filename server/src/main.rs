@@ -1,12 +1,12 @@
 extern crate websocket;
-extern crate rustc_serialize;
-
-mod emulator;
+extern crate avr;
 
 use std::thread;
 
 use websocket::{Server, Message, Sender, Receiver};
 use websocket::header::WebSocketProtocol;
+
+use avr::emulator;
 
 fn main() {
     let server = Server::bind("127.0.0.1:2794").unwrap();
