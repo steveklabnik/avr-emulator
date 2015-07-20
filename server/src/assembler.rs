@@ -7,32 +7,32 @@ pub struct MachineCode<'a> {
 
 pub struct Instruction<'a> {
     label: &'a str,
-    operation: String,
-    operands: Vec<String>
+    operation: &'a str,
+    operands: Vec<&'a str>
 }
 
-pub fn parse_instruction<'a>(instruction: String) -> Instruction<'a> {
+pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {
     let mut instruction_iterator = instruction.split(" ");
     let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
 
     let mut operands_iterator = instruction_vector[1].split(",");
-    let operands_vector = operands_iterator.map(|x| x.to_string()).collect::<Vec<String>>();
+    let operands_vector = operands_iterator.collect::<Vec<&str>>();
 
     Instruction {
         label: "",
-        operation: instruction_vector[0].to_string(),
+        operation: instruction_vector[0],
         operands: operands_vector
     }
 }
 
-pub fn assemble<'a>(program: String) -> Vec<Instruction<'a>> {
+pub fn assemble<'a>(program: &'a str) -> Vec<Instruction<'a>> {
     let instruction_iterator = program.split("\n");
     let mut instructions: Vec<Instruction> = Vec::with_capacity(2);
     let mut label_locations = HashMap::new();
 
     for (index, line) in instruction_iterator.enumerate() {
         println!("{}", line);
-        let instruction = parse_instruction(line.to_string());
+        let instruction = parse_instruction(line);
         if (instruction.label != "") {
           label_locations.insert(instruction.label, index);
         }
@@ -45,7 +45,7 @@ pub fn assemble<'a>(program: String) -> Vec<Instruction<'a>> {
 
 #[test]
 fn can_assemble() {
-    let program = "ldi r0,$0f\ninc r0".to_string();
+    let program = "ldi r0,$0f\ninc r0";
     let instructions = assemble(program);
 
     assert_eq!(instructions.len(), 2);
