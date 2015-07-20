@@ -29,10 +29,10 @@ pub struct Instruction {
 }
 
 pub fn parse_instruction(instruction: String) -> Instruction {
-    let mut instruction_iterator = instruction.split(" ");
+    let instruction_iterator = instruction.split(" ");
     let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
 
-    let mut operands_iterator = instruction_vector[1].split(",");
+    let operands_iterator = instruction_vector[1].split(",");
     let operands_vector = operands_iterator.map(|x| x.to_string()).collect::<Vec<String>>();
 
     Instruction {

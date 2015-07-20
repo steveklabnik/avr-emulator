@@ -1,10 +1,17 @@
-pub struct Instruction {
-    label: String,
+use std::collections::HashMap;
+
+pub struct MachineCode<'a> {
+    instructions: Vec<Instruction<'a>>,
+    label_locations: HashMap<&'a str, i32>
+}
+
+pub struct Instruction<'a> {
+    label: &'a str,
     operation: String,
     operands: Vec<String>
 }
 
-pub fn parse_instruction(instruction: String) -> Instruction {
+pub fn parse_instruction<'a>(instruction: String) -> Instruction<'a> {
     let mut instruction_iterator = instruction.split(" ");
     let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
 
@@ -12,20 +19,28 @@ pub fn parse_instruction(instruction: String) -> Instruction {
     let operands_vector = operands_iterator.map(|x| x.to_string()).collect::<Vec<String>>();
 
     Instruction {
-        label: "".to_string(),
+        label: "",
         operation: instruction_vector[0].to_string(),
         operands: operands_vector
     }
 }
 
-pub fn assemble(program: String) -> Vec<Instruction> {
-    let mut instruction_iterator = program.split("\n");
-    let mut vec: Vec<Instruction> = Vec::with_capacity(2);
-    for line in instruction_iterator {
+pub fn assemble<'a>(program: String) -> Vec<Instruction<'a>> {
+    let instruction_iterator = program.split("\n");
+    let mut instructions: Vec<Instruction> = Vec::with_capacity(2);
+    let mut label_locations = HashMap::new();
+
+    for (index, line) in instruction_iterator.enumerate() {
         println!("{}", line);
-        vec.push(parse_instruction(line.to_string()));
+        let instruction = parse_instruction(line.to_string());
+        if (instruction.label != "") {
+          label_locations.insert(instruction.label, index);
+        }
+
+        instructions.push(instruction);
+
     }
-    vec
+    instructions
 }
 
 #[test]
