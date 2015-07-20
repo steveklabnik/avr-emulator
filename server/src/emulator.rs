@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use rustc_serialize::json;
 use rustc_serialize::hex::FromHex;
 
-use opcodes::add;
+use opcodes;
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct AvrDataMemory {
@@ -96,7 +96,7 @@ pub fn perform_instruction(emulator: &Emulator, instruction_line: String) -> Emu
     println!("instruction line: {}", instruction_line);
     let instruction = parse_instruction(instruction_line);
     match &instruction.operation.to_owned()[..] { // http://stackoverflow.com/a/23977218
-      "add" => add::perform(&emulator, &instruction.operands[0], &instruction.operands[1]),
+      "add" => opcodes::add(&emulator, &instruction.operands[0], &instruction.operands[1]),
       "inc" => inc(&emulator, &instruction.operands[0]),
       "ldi" => ldi(&emulator, &instruction.operands[0], &instruction.operands[1]),
       _ => inc(&emulator, &instruction.operands[0]),
