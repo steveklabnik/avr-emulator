@@ -3,7 +3,7 @@ use std::collections::HashMap;
 #[derive(Clone, Debug)]
 pub struct MachineCode<'a> {
     pub instructions: Vec<Instruction<'a>>,
-    label_locations: HashMap<&'a str, usize>
+    pub label_locations: HashMap<&'a str, usize>
 }
 
 #[derive(Clone, Debug)]

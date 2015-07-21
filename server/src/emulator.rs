@@ -4,6 +4,7 @@ use rustc_serialize::hex::FromHex;
 use assembler;
 use opcodes;
 
+#[derive(Clone, Debug)]
 pub struct AvrDataMemory {
     pub registers: Vec<u8>,
     pub io: Vec<u8>,
