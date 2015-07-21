@@ -1,17 +1,14 @@
 use std::collections::HashMap;
-use rustc_serialize::json;
 
-#[derive(RustcDecodable, RustcEncodable)]
 pub struct MachineCode<'a> {
-    instructions: Vec<Instruction<'a>>,
+    pub instructions: Vec<Instruction<'a>>,
     label_locations: HashMap<&'a str, usize>
 }
 
-#[derive(RustcDecodable, RustcEncodable)]
 pub struct Instruction<'a> {
-    label: &'a str,
-    operation: &'a str,
-    operands: Vec<&'a str>
+    pub label: &'a str,
+    pub operation: &'a str,
+    pub operands: Vec<&'a str>
 }
 
 pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {

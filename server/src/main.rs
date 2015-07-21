@@ -7,6 +7,7 @@ use websocket::{Server, Message, Sender, Receiver};
 use websocket::header::WebSocketProtocol;
 
 use avr::emulator;
+use avr::assembler;
 
 fn main() {
     let server = Server::bind("127.0.0.1:2794").unwrap();
@@ -42,7 +43,8 @@ fn main() {
                     registers: vec![0,2,3,0,0,0,1,5],
                     io: vec![],
                     ram: vec![]
-                }
+              },
+              machine_code: assembler::assemble("")
             };
 
             let encoded = Message::Text(emulator::serialize(&emulator_instance));
@@ -65,8 +67,9 @@ fn main() {
                         sender.send_message(message).unwrap();
                     }
                     Message::Text(data) => {
-                        emulator_instance = emulator::perform_instruction(&emulator_instance, data);
-                        let encoded = Message::Text(emulator::serialize(&emulator_instance));
+                        //emulator_instance = emulator::perform_instruction(&emulator_instance, data);
+                        //let encoded = Message::Text(emulator::serialize(&emulator_instance));
+                        let encoded = Message::Text("hi".to_string());
                         sender.send_message(encoded).unwrap();
                     }
                     _ => {
