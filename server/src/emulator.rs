@@ -25,7 +25,7 @@ impl<'a> Emulator<'a> {
   pub fn new(program: &str) -> Emulator {
       Emulator {
         data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
+            registers: vec![0,0,0],
             io: vec![],
             ram: vec![]
         },
