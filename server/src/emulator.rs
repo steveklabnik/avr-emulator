@@ -37,31 +37,10 @@ pub fn get_register_index(operand: &str) -> usize {
     index.unwrap()
 }
 
-fn hex_to_int(operand: &String) -> u8 {
+pub fn hex_to_int(operand: &str) -> u8 {
     let hex = operand.replace("$", "");
     hex.from_hex().unwrap()[0]
 }
-
-
-
-//pub fn ldi<'a>(emulator: &Emulator<'a>, rd: &String, k: &String) -> Emulator<'a> {
-    //let rd_index = get_register_index(rd);
-    //let k_value = hex_to_int(k);
-
-    //let registers = &emulator.data_memory.registers;
-    //let mut new_registers = registers.to_vec();
-    //new_registers[rd_index] = k_value;
-
-    //let data_memory = &emulator.data_memory;
-    //Emulator {
-        //data_memory: AvrDataMemory {
-            //registers: new_registers,
-            //io: data_memory.io.to_vec(),
-            //ram: data_memory.ram.to_vec()
-        //},
-        //machine_code: assembler::assemble("")
-    //}
-//}
 
 pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
     let instruction = &emulator.get_next_instruction();
@@ -91,32 +70,16 @@ fn can_step() {
 }
 
 
-#[test]
-fn it_serializes() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("add r1,r2")
-    };
-    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
-}
-
 //#[test]
-//fn can_ldi() {
+//fn it_serializes() {
     //let emulator = Emulator {
         //data_memory: AvrDataMemory {
-            //registers: vec![1,0,0],
+            //registers: vec![0,2,3],
             //io: vec![],
             //ram: vec![]
         //},
-        //machine_code: assembler::assemble("")
+        //program_pointer: 0,
+        //machine_code: assembler::assemble("add r1,r2")
     //};
-    //let instruction_line = "ldi r0,$0F".to_string();
-    //let next_emulator = perform_instruction(&emulator, instruction_line);
-    //assert_eq!(15, next_emulator.data_memory.registers[0]);
+    //assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
 //}
-
