@@ -8,6 +8,7 @@ pub struct MachineCode<'a> {
 
 #[derive(Clone, Debug)]
 pub struct Instruction<'a> {
+    pub raw: &'a str,
     pub label: &'a str,
     pub operation: &'a str,
     pub operands: Vec<&'a str>
@@ -25,6 +26,7 @@ pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {
     let label = instruction_vector.pop().unwrap_or("");
 
     Instruction {
+        raw: instruction,
         label: label,
         operation: operation,
         operands: operands_vector

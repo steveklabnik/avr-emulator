@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use rustc_serialize::json::{ToJson, Json};
 use rustc_serialize::hex::FromHex;
 
@@ -38,7 +39,17 @@ impl<'a> Emulator<'a> {
 
 impl<'a> ToJson for Emulator<'a> {
     fn to_json(&self) -> Json {
-        Json::String(format!("{}+{}", "hi".to_string(), "hi".to_string()))
+        let mut data_memory = BTreeMap::new();
+        data_memory.insert("registers".to_string(), self.data_memory.registers.to_json());
+
+        let instructions = self.machine_code.instructions.iter().map(|x| x.raw.to_string()).collect::<Vec<String>>();
+
+        let mut emulator = BTreeMap::new();
+
+        emulator.insert("data_memory".to_string(), data_memory.to_json());
+        emulator.insert("program_pointer".to_string(), self.program_pointer.to_json());
+        emulator.insert("instructions".to_string(), instructions.to_json());
+        Json::Object(emulator)
     }
 }
 
@@ -83,19 +94,16 @@ mod tests {
       emulator = step(&emulator);
       assert_eq!(6, emulator.data_memory.registers[0]);
   }
+
+
+  #[test]
+  fn it_serializes() {
+      let program = "add r1,r2\nadd r0,r1";
+      let mut emulator = Emulator::new(program);
+      emulator.data_memory.registers[0] = 1;
+      emulator.data_memory.registers[1] = 2;
+      emulator.data_memory.registers[2] = 3;
+
+      assert_eq!("{\"data_memory\":{\"registers\":[1,2,3]},\"instructions\":[\"add r1,r2\",\"add r0,r1\"],\"program_pointer\":0}", serialize(&emulator));
+  }
 }
-
-
-//#[test]
-//fn it_serializes() {
-    //let emulator = Emulator {
-        //data_memory: AvrDataMemory {
-            //registers: vec![0,2,3],
-            //io: vec![],
-            //ram: vec![]
-        //},
-        //program_pointer: 0,
-        //machine_code: assembler::assemble("add r1,r2")
-    //};
-    //assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
-//}
