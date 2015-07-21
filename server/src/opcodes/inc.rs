@@ -4,12 +4,11 @@ use emulator::get_register_index;
 
 use assembler;
 
-pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, rr: &str) -> Emulator<'a> {
+pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str) -> Emulator<'a> {
     let rd_index = get_register_index(rd);
-    let rr_index = get_register_index(rr);
 
     let registers = &emulator.data_memory.registers;
-    let result = registers[rd_index] + registers[rr_index];
+    let result = registers[rd_index] + 1;
 
     let mut new_registers = registers.to_vec();
     new_registers[rd_index] = result;
@@ -27,7 +26,7 @@ pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, rr: &str) -> Emulator<'a> 
 }
 
 #[test]
-fn can_add() {
+fn can_inc() {
     let emulator = Emulator {
         data_memory: AvrDataMemory {
             registers: vec![0,2,3],
@@ -35,11 +34,12 @@ fn can_add() {
             ram: vec![]
         },
         program_pointer: 0,
-        machine_code: assembler::assemble("add r0,r0")
+        machine_code: assembler::assemble("inc r1")
     };
-    let emulator = perform(&emulator, "r1", "r2");
-    assert_eq!(5, emulator.data_memory.registers[1]);
-    assert_eq!(3, emulator.data_memory.registers[2]);
+    let emulator = perform(&emulator, "r1");
+    assert_eq!(3, emulator.data_memory.registers[1]);
+    let emulator = perform(&emulator, "r1");
+    assert_eq!(4, emulator.data_memory.registers[1]);
 }
 
 #[test]
@@ -51,10 +51,10 @@ fn updates_program_pointer() {
             ram: vec![]
         },
         program_pointer: 0,
-        machine_code: assembler::assemble("add r0,r0")
+        machine_code: assembler::assemble("inc r1")
     };
-    let emulator = perform(&emulator, "r1", "r2");
+    let emulator = perform(&emulator, "r1");
     assert_eq!(1, emulator.program_pointer);
-    let emulator = perform(&emulator, "r1", "r2");
+    let emulator = perform(&emulator, "r1");
     assert_eq!(2, emulator.program_pointer);
 }

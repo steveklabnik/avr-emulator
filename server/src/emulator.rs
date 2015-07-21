@@ -43,25 +43,6 @@ fn hex_to_int(operand: &String) -> u8 {
 }
 
 
-//pub fn inc<'a>(emulator: &Emulator, rd: &String) -> Emulator<'a> {
-    //let rd_index = get_register_index(rd);
-
-    //let registers = &emulator.data_memory.registers;
-    //let result = registers[rd_index] + 1;
-
-    //let mut new_registers = registers.to_vec();
-    //new_registers[rd_index] = result;
-
-    //let data_memory = &emulator.data_memory;
-    //Emulator {
-        //data_memory: AvrDataMemory {
-            //registers: new_registers,
-            //io: data_memory.io.to_vec(),
-            //ram: data_memory.ram.to_vec()
-        //},
-        //machine_code: assembler::assemble("")
-    //}
-//}
 
 //pub fn ldi<'a>(emulator: &Emulator<'a>, rd: &String, k: &String) -> Emulator<'a> {
     //let rd_index = get_register_index(rd);
@@ -139,17 +120,3 @@ fn it_serializes() {
     //assert_eq!(15, next_emulator.data_memory.registers[0]);
 //}
 
-//#[test]
-//fn can_inc() {
-    //let emulator = Emulator {
-        //data_memory: AvrDataMemory {
-            //registers: vec![0,2,3],
-            //io: vec![],
-            //ram: vec![]
-        //},
-        //machine_code: assembler::assemble("")
-    //};
-    //let instruction_line = "inc r0".to_string();
-    //let next_emulator = perform_instruction(&emulator, instruction_line);
-    //assert_eq!(1, next_emulator.data_memory.registers[0]);
-//}

@@ -14,6 +14,7 @@ pub struct Instruction<'a> {
 }
 
 pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {
+    println!("instruction::: {}", instruction);
     let instruction_iterator = instruction.split(" ");
     let mut instruction_vector = instruction_iterator.collect::<Vec<&str>>();
 
