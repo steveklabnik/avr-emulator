@@ -21,6 +21,18 @@ impl<'a> Emulator<'a> {
   fn get_next_instruction(&self) -> &assembler::Instruction {
     &self.machine_code.instructions[self.program_pointer]
   }
+
+  pub fn new(program: &str) -> Emulator {
+      Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![0,2,3],
+            io: vec![],
+            ram: vec![]
+        },
+        program_pointer: 0,
+        machine_code: assembler::assemble(program)
+     }
+  }
 }
 
 impl<'a> ToJson for Emulator<'a> {

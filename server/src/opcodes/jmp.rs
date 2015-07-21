@@ -1,8 +1,4 @@
 use emulator::Emulator;
-use emulator::AvrDataMemory;
-use emulator::get_register_index;
-
-use assembler;
 
 pub fn perform<'a>(emulator: &Emulator<'a>, k: &str) -> Emulator<'a> {
     let label = k;
@@ -17,18 +13,25 @@ pub fn perform<'a>(emulator: &Emulator<'a>, k: &str) -> Emulator<'a> {
     }
 }
 
-#[test]
-fn can_jmp() {
-    let program = "add r0,r0\nadd r0,r0\nadd r0,r0\nspecial inc r0";
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble(program)
-    };
-    let emulator = perform(&emulator, "special");
-    assert_eq!(3, emulator.program_pointer);
+#[cfg(test)]
+mod tests {
+  use emulator::Emulator;
+
+  use super::*;
+
+  #[test]
+  fn can_jmp() {
+      let program = "add r0,r0\nadd r0,r0\nadd r0,r0\nspecial inc r0";
+      let mut emulator = Emulator::new(program);
+      emulator = perform(&emulator, "special");
+      assert_eq!(3, emulator.program_pointer);
+  }
+
+  #[test]
+  #[should_panic(expected = "Option::unwrap()")]
+  fn handles_invalid_label() {
+      let program = "add r0,r0\nadd r0,r0\nadd r0,r0\nspecial inc r0";
+      let emulator = Emulator::new(program);
+      perform(&emulator, "bogus");
+  }
 }
