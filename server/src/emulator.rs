@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use rustc_serialize::json;
 use rustc_serialize::hex::FromHex;
 
+use assembler;
 use opcodes;
 
 #[derive(RustcDecodable, RustcEncodable)]
@@ -12,15 +13,15 @@ pub struct AvrDataMemory {
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
-pub struct Emulator {
-    pub data_memory: AvrDataMemory
+pub struct Emulator<'a> {
+    pub data_memory: AvrDataMemory,
+    pub machine_code: assembler::MachineCode<'a>
 }
 
 pub fn serialize(emulator: &Emulator) -> String {
     // Serialize using `json::encode`
     json::encode(emulator).unwrap()
 }
-
 
 pub struct Instruction {
     label: String,
@@ -52,7 +53,7 @@ fn hex_to_int(operand: &String) -> u8 {
 }
 
 
-pub fn inc(emulator: &Emulator, rd: &String) -> Emulator {
+pub fn inc<'a>(emulator: &Emulator, rd: &String) -> Emulator<'a> {
     let rd_index = get_register_index(rd);
 
     let registers = &emulator.data_memory.registers;
@@ -71,7 +72,7 @@ pub fn inc(emulator: &Emulator, rd: &String) -> Emulator {
     }
 }
 
-pub fn ldi(emulator: &Emulator, rd: &String, k: &String) -> Emulator {
+pub fn ldi<'a>(emulator: &Emulator<'a>, rd: &String, k: &String) -> Emulator<'a> {
     let rd_index = get_register_index(rd);
     let k_value = hex_to_int(k);
 
@@ -92,7 +93,7 @@ pub fn ldi(emulator: &Emulator, rd: &String, k: &String) -> Emulator {
 // This is a reducer just like redux!
 // (emulator, instruction) => (emulator)
 // (state, action) => (state)
-pub fn perform_instruction(emulator: &Emulator, instruction_line: String) -> Emulator {
+pub fn perform_instruction<'a>(emulator: &Emulator, instruction_line: String) -> Emulator<'a> {
     println!("instruction line: {}", instruction_line);
     let instruction = parse_instruction(instruction_line);
     match &instruction.operation.to_owned()[..] { // http://stackoverflow.com/a/23977218
@@ -103,6 +104,30 @@ pub fn perform_instruction(emulator: &Emulator, instruction_line: String) -> Emu
     }
 }
 
+pub fn step<'a>(emulator: &Emulator) -> Emulator<'a> {
+    let instruction = emulator.machine_code.instructions[0];
+    match &instruction.operation.to_owned()[..] { // http://stackoverflow.com/a/23977218
+      "add" => opcodes::add(&emulator, &instruction.operands[0], &instruction.operands[1]),
+      "inc" => inc(&emulator, &instruction.operands[0]),
+      "ldi" => ldi(&emulator, &instruction.operands[0], &instruction.operands[1]),
+      _ => inc(&emulator, &instruction.operands[0]),
+    }
+}
+
+#[test]
+fn can_step() {
+    let emulator = Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![1,0,0],
+            io: vec![],
+            ram: vec![]
+        },
+        machine_code: assembler::assemble("ldi r0,$0F")
+    };
+    let next_emulator = step(&emulator);
+    assert_eq!(15, next_emulator.data_memory.registers[0]);
+}
+
 #[test]
 fn can_ldi() {
     let emulator = Emulator {
@@ -110,7 +135,8 @@ fn can_ldi() {
             registers: vec![1,0,0],
             io: vec![],
             ram: vec![]
-        }
+        },
+        machine_code: assembler::assemble("")
     };
     let instruction_line = "ldi r0,$0F".to_string();
     let next_emulator = perform_instruction(&emulator, instruction_line);
@@ -124,7 +150,8 @@ fn can_inc() {
             registers: vec![0,2,3],
             io: vec![],
             ram: vec![]
-        }
+        },
+        machine_code: assembler::assemble("")
     };
     let instruction_line = "inc r0".to_string();
     let next_emulator = perform_instruction(&emulator, instruction_line);
@@ -138,7 +165,8 @@ fn it_works() {
             registers: vec![0,2,3],
             io: vec![],
             ram: vec![]
-        }
+        },
+        machine_code: assembler::assemble("")
     };
     assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
 }
