@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 pub struct MachineCode<'a> {
     instructions: Vec<Instruction<'a>>,
-    label_locations: HashMap<&'a str, i32>
+    label_locations: HashMap<&'a str, usize>
 }
 
 pub struct Instruction<'a> {
@@ -12,20 +12,23 @@ pub struct Instruction<'a> {
 }
 
 pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {
-    let mut instruction_iterator = instruction.split(" ");
-    let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
+    let instruction_iterator = instruction.split(" ");
+    let mut instruction_vector = instruction_iterator.collect::<Vec<&str>>();
 
-    let mut operands_iterator = instruction_vector[1].split(",");
+    let operands_iterator = instruction_vector.pop().unwrap().split(",");
     let operands_vector = operands_iterator.collect::<Vec<&str>>();
 
+    let operation = instruction_vector.pop().unwrap();
+    let label = instruction_vector.pop().unwrap_or("");
+
     Instruction {
-        label: "",
-        operation: instruction_vector[0],
+        label: label,
+        operation: operation,
         operands: operands_vector
     }
 }
 
-pub fn assemble<'a>(program: &'a str) -> Vec<Instruction<'a>> {
+pub fn assemble<'a>(program: &'a str) -> MachineCode<'a> {
     let instruction_iterator = program.split("\n");
     let mut instructions: Vec<Instruction> = Vec::with_capacity(2);
     let mut label_locations = HashMap::new();
@@ -40,23 +43,29 @@ pub fn assemble<'a>(program: &'a str) -> Vec<Instruction<'a>> {
         instructions.push(instruction);
 
     }
-    instructions
+    MachineCode {
+      instructions: instructions,
+      label_locations: label_locations
+    }
 }
 
 #[test]
 fn can_assemble() {
-    let program = "ldi r0,$0f\ninc r0";
-    let instructions = assemble(program);
+    let program = "ldi r0,$0f\nspecial inc r0";
+    let machine_code = assemble(program);
 
-    assert_eq!(instructions.len(), 2);
+    assert_eq!(machine_code.instructions.len(), 2);
 
-    let ldi = &instructions[0];
+    let ldi = &machine_code.instructions[0];
     assert_eq!("", ldi.label);
     assert_eq!("ldi", ldi.operation);
     assert_eq!(vec!["r0","$0f"], ldi.operands);
 
-    let inc = &instructions[1];
-    assert_eq!("", inc.label);
+    let inc = &machine_code.instructions[1];
+    assert_eq!("special", inc.label);
     assert_eq!("inc", inc.operation);
     assert_eq!(vec!["r0"], inc.operands);
+
+    let labels = &machine_code.label_locations;
+    assert_eq!(labels.get("special"), Some(&1usize));
 }
