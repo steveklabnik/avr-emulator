@@ -1,6 +1,4 @@
-jest.dontMock('../components/ProgramStack');
 import TestUtils from 'react-addons-testutils';
-import ProgramStack from '../components/ProgramStack';
 
 
 describe('sum', function() {
