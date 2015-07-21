@@ -13,7 +13,14 @@ pub struct AvrDataMemory {
 
 pub struct Emulator<'a> {
     pub data_memory: AvrDataMemory,
+    pub program_pointer: usize,
     pub machine_code: assembler::MachineCode<'a>
+}
+
+impl<'a> Emulator<'a> {
+  fn get_next_instruction(&self) -> &assembler::Instruction {
+    &self.machine_code.instructions[self.program_pointer]
+  }
 }
 
 impl<'a> ToJson for Emulator<'a> {
@@ -97,7 +104,7 @@ fn hex_to_int(operand: &String) -> u8 {
 //}
 
 pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
-    let instruction = &emulator.machine_code.instructions[0];
+    let instruction = &emulator.get_next_instruction();
     match instruction.operation {
       "add" => opcodes::add(&emulator, &instruction.operands[0], &instruction.operands[1]),
       //"inc" => inc(&emulator, &instruction.operands[0]),
@@ -108,16 +115,19 @@ pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
 
 #[test]
 fn can_step() {
-    let emulator = Emulator {
+    let mut emulator = Emulator {
         data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
+            registers: vec![1,2,3],
             io: vec![],
             ram: vec![]
         },
-        machine_code: assembler::assemble("add r1,r2")
+        program_pointer: 0,
+        machine_code: assembler::assemble("add r1,r2\nadd r0,r1")
     };
-    let next_emulator = step(&emulator);
-    assert_eq!(5, next_emulator.data_memory.registers[1]);
+    emulator = step(&emulator);
+    assert_eq!(5, emulator.data_memory.registers[1]);
+    emulator = step(&emulator);
+    assert_eq!(6, emulator.data_memory.registers[0]);
 }
 
 
@@ -129,6 +139,7 @@ fn it_serializes() {
             io: vec![],
             ram: vec![]
         },
+        program_pointer: 0,
         machine_code: assembler::assemble("add r1,r2")
     };
     assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));

@@ -21,6 +21,7 @@ pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, rr: &str) -> Emulator<'a> 
             io: data_memory.io.to_vec(),
             ram: data_memory.ram.to_vec()
         },
+        program_pointer: &emulator.program_pointer+1,
         machine_code: emulator.machine_code.clone()
     }
 }
@@ -33,9 +34,25 @@ fn can_add() {
             io: vec![],
             ram: vec![]
         },
+        program_pointer: 0,
         machine_code: assembler::assemble("add r0,r0")
     };
     let next_emulator = perform(&emulator, "r1", "r2");
     assert_eq!(5, next_emulator.data_memory.registers[1]);
     assert_eq!(3, next_emulator.data_memory.registers[2]);
+}
+
+#[test]
+fn updates_program_pointer() {
+    let emulator = Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![0,2,3],
+            io: vec![],
+            ram: vec![]
+        },
+        program_pointer: 0,
+        machine_code: assembler::assemble("add r0,r0")
+    };
+    let next_emulator = perform(&emulator, "r1", "r2");
+    assert_eq!(1, next_emulator.program_pointer);
 }

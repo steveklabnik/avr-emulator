@@ -44,6 +44,7 @@ fn main() {
                     io: vec![],
                     ram: vec![]
               },
+              program_pointer: 0,
               machine_code: assembler::assemble("")
             };
 
