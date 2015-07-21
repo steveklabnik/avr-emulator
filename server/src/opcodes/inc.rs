@@ -2,8 +2,6 @@ use emulator::Emulator;
 use emulator::AvrDataMemory;
 use emulator::get_register_index;
 
-use assembler;
-
 pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str) -> Emulator<'a> {
     let rd_index = get_register_index(rd);
 
@@ -25,36 +23,32 @@ pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str) -> Emulator<'a> {
     }
 }
 
-#[test]
-fn can_inc() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("inc r1")
-    };
-    let emulator = perform(&emulator, "r1");
-    assert_eq!(3, emulator.data_memory.registers[1]);
-    let emulator = perform(&emulator, "r1");
-    assert_eq!(4, emulator.data_memory.registers[1]);
-}
+#[cfg(test)]
+mod tests {
+  use emulator::Emulator;
 
-#[test]
-fn updates_program_pointer() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("inc r1")
-    };
-    let emulator = perform(&emulator, "r1");
-    assert_eq!(1, emulator.program_pointer);
-    let emulator = perform(&emulator, "r1");
-    assert_eq!(2, emulator.program_pointer);
+  use super::*;
+
+  #[test]
+  fn can_inc() {
+      let program = "add r0,r0";
+      let mut emulator = Emulator::new(program);
+      emulator.data_memory.registers[1] = 2;
+
+      emulator = perform(&emulator, "r1");
+      assert_eq!(3, emulator.data_memory.registers[1]);
+      emulator = perform(&emulator, "r1");
+      assert_eq!(4, emulator.data_memory.registers[1]);
+  }
+
+  #[test]
+  fn updates_program_pointer() {
+      let program = "add r0,r0";
+      let mut emulator = Emulator::new(program);
+
+      emulator = perform(&emulator, "r1");
+      assert_eq!(1, emulator.program_pointer);
+      emulator = perform(&emulator, "r1");
+      assert_eq!(2, emulator.program_pointer);
+  }
 }

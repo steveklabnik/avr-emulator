@@ -52,23 +52,28 @@ pub fn assemble<'a>(program: &'a str) -> MachineCode<'a> {
     }
 }
 
-#[test]
-fn can_assemble() {
-    let program = "ldi r0,$0f\nspecial inc r0";
-    let machine_code = assemble(program);
+#[cfg(test)]
+mod tests {
+  use super::*;
 
-    assert_eq!(machine_code.instructions.len(), 2);
+  #[test]
+  fn can_assemble() {
+      let program = "ldi r0,$0f\nspecial inc r0";
+      let machine_code = assemble(program);
 
-    let ldi = &machine_code.instructions[0];
-    assert_eq!("", ldi.label);
-    assert_eq!("ldi", ldi.operation);
-    assert_eq!(vec!["r0","$0f"], ldi.operands);
+      assert_eq!(machine_code.instructions.len(), 2);
 
-    let inc = &machine_code.instructions[1];
-    assert_eq!("special", inc.label);
-    assert_eq!("inc", inc.operation);
-    assert_eq!(vec!["r0"], inc.operands);
+      let ldi = &machine_code.instructions[0];
+      assert_eq!("", ldi.label);
+      assert_eq!("ldi", ldi.operation);
+      assert_eq!(vec!["r0","$0f"], ldi.operands);
 
-    let labels = &machine_code.label_locations;
-    assert_eq!(labels.get("special"), Some(&1usize));
+      let inc = &machine_code.instructions[1];
+      assert_eq!("special", inc.label);
+      assert_eq!("inc", inc.operation);
+      assert_eq!(vec!["r0"], inc.operands);
+
+      let labels = &machine_code.label_locations;
+      assert_eq!(labels.get("special"), Some(&1usize));
+  }
 }

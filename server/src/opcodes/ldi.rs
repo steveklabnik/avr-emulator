@@ -3,8 +3,6 @@ use emulator::AvrDataMemory;
 use emulator::get_register_index;
 use emulator::hex_to_int;
 
-use assembler;
-
 pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, k: &str) -> Emulator<'a> {
     let rd_index = get_register_index(rd);
     let k_value = hex_to_int(k);
@@ -25,34 +23,29 @@ pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, k: &str) -> Emulator<'a> {
     }
 }
 
-#[test]
-fn can_ldi() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,0,0],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("add r0,r0")
-    };
-    let emulator = perform(&emulator, "r1", "$0F");
-    assert_eq!(15, emulator.data_memory.registers[1]);
-}
+#[cfg(test)]
+mod tests {
+  use emulator::Emulator;
 
-#[test]
-fn updates_program_pointer() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("add r0,r0")
-    };
-    let emulator = perform(&emulator, "r1", "$0F");
-    assert_eq!(1, emulator.program_pointer);
-    let emulator = perform(&emulator, "r1", "$00");
-    assert_eq!(2, emulator.program_pointer);
+  use super::*;
+
+  #[test]
+  fn can_ldi() {
+      let program = "add r0,r0";
+      let mut emulator = Emulator::new(program);
+
+      emulator = perform(&emulator, "r1", "$0F");
+      assert_eq!(15, emulator.data_memory.registers[1]);
+  }
+
+  #[test]
+  fn updates_program_pointer() {
+      let program = "add r0,r0";
+      let mut emulator = Emulator::new(program);
+
+      emulator = perform(&emulator, "r1", "$0F");
+      assert_eq!(1, emulator.program_pointer);
+      emulator = perform(&emulator, "r1", "$00");
+      assert_eq!(2, emulator.program_pointer);
+  }
 }

@@ -11,6 +11,7 @@ pub struct AvrDataMemory {
     pub ram: Vec<u8>
 }
 
+#[derive(Clone, Debug)]
 pub struct Emulator<'a> {
     pub data_memory: AvrDataMemory,
     pub program_pointer: usize,
@@ -65,21 +66,23 @@ pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
     }
 }
 
-#[test]
-fn can_step() {
-    let mut emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![1,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        program_pointer: 0,
-        machine_code: assembler::assemble("add r1,r2\nadd r0,r1")
-    };
-    emulator = step(&emulator);
-    assert_eq!(5, emulator.data_memory.registers[1]);
-    emulator = step(&emulator);
-    assert_eq!(6, emulator.data_memory.registers[0]);
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  #[test]
+  fn can_step() {
+      let program = "add r1,r2\nadd r0,r1";
+      let mut emulator = Emulator::new(program);
+      emulator.data_memory.registers[0] = 1;
+      emulator.data_memory.registers[1] = 2;
+      emulator.data_memory.registers[2] = 3;
+
+      emulator = step(&emulator);
+      assert_eq!(5, emulator.data_memory.registers[1]);
+      emulator = step(&emulator);
+      assert_eq!(6, emulator.data_memory.registers[0]);
+  }
 }
 
 
