@@ -1,5 +1,4 @@
-use std::collections::HashMap;
-use rustc_serialize::json::{self, ToJson, Json};
+use rustc_serialize::json::{ToJson, Json};
 use rustc_serialize::hex::FromHex;
 
 use assembler;
@@ -30,29 +29,9 @@ impl<'a> ToJson for Emulator<'a> {
 }
 
 pub fn serialize(emulator: &Emulator) -> String {
-    // Serialize using `json::encode`
     emulator.to_json().to_string()
 }
 
-pub struct Instruction {
-    label: String,
-    operation: String,
-    operands: Vec<String>
-}
-
-pub fn parse_instruction(instruction: String) -> Instruction {
-    let instruction_iterator = instruction.split(" ");
-    let instruction_vector = instruction_iterator.collect::<Vec<&str>>();
-
-    let operands_iterator = instruction_vector[1].split(",");
-    let operands_vector = operands_iterator.map(|x| x.to_string()).collect::<Vec<String>>();
-
-    Instruction {
-        label: "".to_string(),
-        operation: instruction_vector[0].to_string(),
-        operands: operands_vector
-    }
-}
 pub fn get_register_index(operand: &str) -> usize {
     let index = operand.replace("r", "").parse::<usize>();
     index.unwrap()

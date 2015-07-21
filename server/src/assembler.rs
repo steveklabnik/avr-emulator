@@ -38,7 +38,7 @@ pub fn assemble<'a>(program: &'a str) -> MachineCode<'a> {
     for (index, line) in instruction_iterator.enumerate() {
         println!("{}", line);
         let instruction = parse_instruction(line);
-        if (instruction.label != "") {
+        if instruction.label != "" {
           label_locations.insert(instruction.label, index);
         }
 
