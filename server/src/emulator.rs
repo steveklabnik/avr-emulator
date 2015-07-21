@@ -110,14 +110,28 @@ pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
 fn can_step() {
     let emulator = Emulator {
         data_memory: AvrDataMemory {
-            registers: vec![1,0,0],
+            registers: vec![0,2,3],
             io: vec![],
             ram: vec![]
         },
         machine_code: assembler::assemble("add r1,r2")
     };
     let next_emulator = step(&emulator);
-    assert_eq!(15, next_emulator.data_memory.registers[0]);
+    assert_eq!(5, next_emulator.data_memory.registers[1]);
+}
+
+
+#[test]
+fn it_serializes() {
+    let emulator = Emulator {
+        data_memory: AvrDataMemory {
+            registers: vec![0,2,3],
+            io: vec![],
+            ram: vec![]
+        },
+        machine_code: assembler::assemble("add r1,r2")
+    };
+    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
 }
 
 //#[test]
@@ -149,16 +163,3 @@ fn can_step() {
     //let next_emulator = perform_instruction(&emulator, instruction_line);
     //assert_eq!(1, next_emulator.data_memory.registers[0]);
 //}
-
-#[test]
-fn it_serializes() {
-    let emulator = Emulator {
-        data_memory: AvrDataMemory {
-            registers: vec![0,2,3],
-            io: vec![],
-            ram: vec![]
-        },
-        machine_code: assembler::assemble("add r1,r2")
-    };
-    assert_eq!("{\"data_memory\":{\"registers\":[0,2,3],\"io\":[],\"ram\":[]}}", serialize(&emulator));
-}

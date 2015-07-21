@@ -1,10 +1,12 @@
 use std::collections::HashMap;
 
+#[derive(Clone, Debug)]
 pub struct MachineCode<'a> {
     pub instructions: Vec<Instruction<'a>>,
     label_locations: HashMap<&'a str, usize>
 }
 
+#[derive(Clone, Debug)]
 pub struct Instruction<'a> {
     pub label: &'a str,
     pub operation: &'a str,
