@@ -19,9 +19,11 @@ Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 ``` bash
 cd server
 cargo build
+
+``` bash
 cd debugger
 npm install
-debugger/node_modules/webpack/bin/webpack.js # TODO: This isn't building to ./bundle.js any more - maybe react-hot-loader is interfering?
+./node_modules/webpack/bin/webpack.js # TODO: This isn't building to ./bundle.js any more - maybe react-hot-loader is interfering?
 ```
 
 ## Development
