@@ -14,7 +14,7 @@ export default class EmulatorApp {
           <div>
             <DebuggerButtons emulator={emulator}
               {...bindActionCreators(DebuggerActions, dispatch)} />
-            <RegisterState registers={emulator.registers} />
+            <RegisterState registers={emulator.data_memory.registers} />
             <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
           </div>
         }
