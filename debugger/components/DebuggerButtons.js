@@ -3,15 +3,18 @@ import React, { PropTypes } from 'react';
 export default class DebuggerButtons {
 
   render() {
-    const { requestProgram } = this.props;
+    const { performStep } = this.props;
     return (
-      <p>
-        <button onClick={requestProgram}>Load Program</button>
-      </p>
+      <div>
+        <h2>Debugger Actions</h2>
+        <p>
+          <button onClick={performStep}>Step</button>
+        </p>
+      </div>
     );
   }
 }
 DebuggerButtons.propTypes = {
-  requestProgram: PropTypes.func.isRequired,
+  performStep: PropTypes.func.isRequired,
   emulator: PropTypes.object.isRequired
 };

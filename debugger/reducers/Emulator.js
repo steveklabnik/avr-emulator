@@ -1,4 +1,4 @@
-import { LOAD_PROGRAM, PERFORM_NEXT} from '../actions/DebuggerActions';
+import { WEBSOCKET_UPDATE } from '../actions/DebuggerActions';
 
 const initialState = {
   registers: [],
@@ -9,14 +9,7 @@ const initialState = {
 
 export default function emulator(state = initialState, action) {
   switch (action.type) {
-    case LOAD_PROGRAM:
-      return {
-        registers: ['init'],
-        instructions: [],
-        stack: [1, 2],
-        program_pointer: 0
-      };
-    case PERFORM_NEXT:
+    case WEBSOCKET_UPDATE:
         var data = JSON.parse(action.event.data);
       return {
         registers: data.data_memory.registers,
