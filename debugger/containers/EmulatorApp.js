@@ -16,6 +16,14 @@ export default class EmulatorApp {
             <DebuggerButtons emulator={emulator}
               {...bindActionCreators(DebuggerActions, dispatch)} />
             <RegisterState registers={emulator.registers} />
+            <div>
+              <h2>Program</h2>
+              <code>
+                {emulator.instructions.map((instruction, i) =>
+                  <p style={{"background-color": (i === emulator.program_pointer ? "#ddd" : "white")}}>{instruction}</p>
+                )}
+              </code>
+            </div>
           </div>
         }
       </Connector>
