@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { formatHex } from './helpers'
+import { formatHex, padInteger } from './helpers'
 
 export default class RegisterState {
 
@@ -9,16 +9,19 @@ export default class RegisterState {
     return (
       <div>
         <h2>Registers</h2>
-        <ul>
-          {registers.map(register =>
-            <li>{formatHex(register)}</li>
+        <table>
+          {registers.map((register, i) =>
+            <tr>
+              <td>R{padInteger(i, "0", 2)}</td>
+              <td>{formatHex(register)}</td>
+            </tr>
           )}
-        </ul>
+        </table>
       </div>
     );
   }
 }
 RegisterState.propTypes = {
-  registers: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  registers: React.PropTypes.arrayOf(React.PropTypes.number).isRequired
 };
 
