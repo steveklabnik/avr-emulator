@@ -7,6 +7,10 @@ This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for re
 * The React/Redux debugger is located in the `debugger` directory
 * The Rust websocket server and emulator library are located in the `server` directory
 
+## Why?
+
+Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/2015/07/13/starfighter/), we thought implementing our own Emulator would be a great problem to tackle to dive a little deeper into with a few technologies we wanted to get our hands on.
+
 ## Installing
 
 #### Requirements
