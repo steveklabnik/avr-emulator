@@ -12,11 +12,14 @@ Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 * [Rust 1.1](http://www.rust-lang.org/install.html)
 * [Node >=0.10.32](https://nodejs.org/download/)
 
+#### Building
+
 ```
 cd server
 cargo build
 cd debugger
 npm install
+debugger/node_modules/webpack/bin/webpack.js
 ```
 
 ### Running
