@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react';
+import { formatHex } from './helpers'
 
 export default class RegisterState {
 
   render() {
     const { registers } = this.props;
-    
+
     return (
       <div>
         <h2>Registers</h2>
         <ul>
           {registers.map(register =>
-            <li>{register}</li>
+            <li>{formatHex(register)}</li>
           )}
         </ul>
       </div>

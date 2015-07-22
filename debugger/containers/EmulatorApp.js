@@ -4,6 +4,7 @@ import { Connector } from 'react-redux';
 import RegisterState from '../components/RegisterState';
 import DebuggerButtons from '../components/DebuggerButtons';
 import ProgramInstructions from '../components/ProgramInstructions';
+import AssemblyProgram from '../components/AssemblyProgram';
 import * as DebuggerActions from '../actions/DebuggerActions';
 
 export default class EmulatorApp {
@@ -16,14 +17,7 @@ export default class EmulatorApp {
             <DebuggerButtons emulator={emulator}
               {...bindActionCreators(DebuggerActions, dispatch)} />
             <RegisterState registers={emulator.registers} />
-            <div>
-              <h2>Program</h2>
-              <code>
-                {emulator.instructions.map((instruction, i) =>
-                  <p style={{"background-color": (i === emulator.program_pointer ? "#ddd" : "white")}}>{instruction}</p>
-                )}
-              </code>
-            </div>
+            <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
           </div>
         }
       </Connector>
