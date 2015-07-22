@@ -19,6 +19,7 @@ Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 ``` bash
 cd server
 cargo build
+```
 
 ``` bash
 cd debugger
