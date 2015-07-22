@@ -1,4 +1,4 @@
-import { socket } from '../socket';
+import { socket } from '../initializers/websocket';
 
 export const WEBSOCKET_REQUEST = 'websocketRequest';
 export const WEBSOCKET_UPDATE = 'websocketUpdate';

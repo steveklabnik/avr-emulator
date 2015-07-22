@@ -1,4 +1,4 @@
-import { socket } from '../socket';
+import { socket } from '../initializers/websocket';
 
 export default function websocketMiddleware({ dispatch, getState }) {
   return (next) => (action) => {
@@ -6,7 +6,7 @@ export default function websocketMiddleware({ dispatch, getState }) {
     if (!socketMessageName) {
       return next(action);
     }
-    console.log(socketMessage);
+
     socket.send(socketMessage.programInstructions);
   };
 }
