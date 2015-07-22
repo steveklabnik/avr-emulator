@@ -33,15 +33,15 @@ npm install
 
 ## Development
 
-Start node server to activate [react-hot-loader](https://github.com/gaearon/react-hot-loader)
+Start node server to activate [react-hot-loader](https://github.com/gaearon/react-hot-loader) from within the `./debugger` directory
+
 ``` bash
-cd debugger
 npm start
 ```
 
-Start Rust websocket server
+Start Rust websocket server from within the `./server` directory
+
 ``` bash
-cd server
 cargo run
 ```
 
@@ -49,12 +49,14 @@ Navigate to http://localhost:3000/index.html
 
 ## Testing
 
+From within the `./debugger` directory
+
 ``` bash
-cd debugger
 npm test
 ```
 
+From within the `./server` directory
+
 ``` bash
-cd server
 cargo test
 ```
