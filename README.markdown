@@ -14,15 +14,19 @@ Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 * [Rust 1.1](http://www.rust-lang.org/install.html)
 * [Node >=0.10.32](https://nodejs.org/download/)
 
-#### Building
+#### Building the Rust Server
+
+From within the `./server` directory:
 
 ``` bash
-cd server
 cargo build
 ```
 
+#### Building `./demo.js`
+
+From within the `./debugger` directory:
+
 ``` bash
-cd debugger
 npm install
 ./node_modules/webpack/bin/webpack.js # TODO: This isn't building to ./bundle.js any more - maybe react-hot-loader is interfering?
 ```
