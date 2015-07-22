@@ -1,11 +1,13 @@
 # Atmel 8-bit AVR Emulator in React and Rust
 
+## Summary
+
 Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 
 * The `debugger` directory holds the react/redux frontend app
 * The `server` directory holds the rust websocket server
 
-### Installing
+## Installing
 
 #### Requirements
 
@@ -22,32 +24,23 @@ npm install
 debugger/node_modules/webpack/bin/webpack.js # TODO: This isn't building to ./bundle.js any more - maybe react-hot-loader is interfering?
 ```
 
-### Running
+## Development
 
-``` bash
-cd server
-cargo run
-```
-
-``` bash
-open debugger/index.html
-```
-
-### Development
-
-``` bash
-cd server
-cargo run
-```
-
+Start node server to activate [react-hot-loader](https://github.com/gaearon/react-hot-loader)
 ``` bash
 cd debugger
 npm start
 ```
 
+Start Rust websocket server
+``` bash
+cd server
+cargo run
+```
+
 Navigate to http://localhost:3000/index.html
 
-### Testing
+## Testing
 
 ``` bash
 cd debugger
