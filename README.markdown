@@ -2,7 +2,7 @@
 
 ## Summary
 
-This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for rendering a debugger. The two are connected via a websocket server. Check out the live demo at [realscout.github.io/avr-emulator](http://realscout.github.io/avr-emulator).
+This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for rendering a debugger. The two communicate via a websocket server. Check out the live demo at [realscout.github.io/avr-emulator](http://realscout.github.io/avr-emulator).
 
 * The React/Redux debugger is located in the `debugger` directory
 * The Rust websocket server and emulator library are located in the `server` directory
