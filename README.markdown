@@ -4,10 +4,8 @@
 
 This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for rendering a debugger. The two are connected via a websocket server. Check out the live demo at [realscout.github.io/avr-emulator](http://realscout.github.io/avr-emulator).
 
-Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
-
-* The `debugger` directory holds the react/redux frontend app
-* The `server` directory holds the rust websocket server
+* The React/Redux debugger is located in the `debugger` directory
+* The Rust websocket server and emulator library are located in the `server` directory
 
 ## Installing
 
@@ -62,3 +60,7 @@ From within the `./server` directory
 ``` bash
 cargo test
 ```
+
+## Misc
+
+Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
