@@ -1,3 +1,5 @@
+# Atmel 8-bit AVR Emulator in React and Rust
+
 Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 
 * The `debugger` directory holds the react/redux frontend app
@@ -5,15 +7,34 @@ Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
 
 ### Installing
 
-See corresponding READMEs for each directory
+#### Requirements
+
+* [Rust 1.1](http://www.rust-lang.org/install.html)
+* [Node >=0.10.32](https://nodejs.org/download/)
+
+```
+cd server
+cargo build
+cd debugger
+npm install
+```
 
 ### Running
 
 ``` bash
-cd debugger
-npm start
 cd server
 cargo run
-navigate to: localhost:3000
 ```
 
+``` bash
+open debugger/index.html
+```
+
+### Development
+
+``` bash
+cd debugger
+npm start
+```
+
+#### Testing
