@@ -9,7 +9,7 @@ This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for re
 
 ## Why?
 
-Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/2015/07/13/starfighter/), we thought implementing our own Emulator would be a great problem to tackle to dive a little deeper into with a few technologies we wanted to get our hands on.
+Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/2015/07/13/starfighter/), we thought implementing our own Emulator would be a great problem to tackle to dive a little deeper into with a few technologies we wanted to get our hands on. During our last biweekly hack day, we dove in and few days later, we had a barebones working version.
 
 ## Installing
 
