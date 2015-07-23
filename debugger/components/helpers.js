@@ -7,11 +7,11 @@ export function formatHex(integer) {
 };
 
 export function padInteger(integer, padCharacter="0", length=2, base=16) {
+  var padding = new Array(length + 1).join( padCharacter );
   if (typeof integer !== 'undefined') {
-    var padding = new Array(length + 1).join( padCharacter );
     return (padding + integer.toString(base)).slice(-length);
   }
   else {
-    return "";
+    return padding;
   }
 };
