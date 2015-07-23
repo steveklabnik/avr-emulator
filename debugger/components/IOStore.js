@@ -35,15 +35,6 @@ export default class IOStore {
             <td>C:{formatBinary(data[63])[7]}</td>
           </tr>
         </table>
-
-        <table>
-          {data.map((value, address) =>
-            <tr>
-              <td>${padInteger(address, "0", 2)}</td>
-              <td>{formatBinary(value)}</td>
-            </tr>
-          )}
-        </table>
       </div>
     );
   }

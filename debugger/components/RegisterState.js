@@ -10,12 +10,18 @@ export default class RegisterState {
       <div>
         <h2>Registers</h2>
         <table>
+            <tr>
+              <th>R</th>
+              <th>Hex</th>
+              <th>Bin</th>
+              <th>Val</th>
+            </tr>
           {registers.map((register, i) =>
             <tr>
-              <td>R{padInteger(i, "0", 2)}</td>
+              <td>R{padInteger(i, "0", 2, 10)}</td>
               <td>{formatHex(register)}</td>
               <td>{formatBinary(register)}</td>
-              <td>{register}</td>
+              <td>{padInteger(register, "0", 3, 10)}</td>
             </tr>
           )}
         </table>
