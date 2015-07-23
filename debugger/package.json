@@ -34,6 +34,6 @@
   },
   "scripts": {
     "test": "BABEL_JEST_STAGE=1 jest",
-    "start": "node server.js && sass --watch src/stylesheets/main.scss:dist/stylesheets/main.css"
+    "start": "sass ./stylesheets/main.scss:./dist/main.css && node server.js"
   }
 }
