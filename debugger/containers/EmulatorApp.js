@@ -16,8 +16,8 @@ export default class EmulatorApp {
             <DebuggerButtons emulator={emulator}
               {...bindActionCreators(DebuggerActions, dispatch)} />
             <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
-            <RegisterState registers={emulator.data_memory.registers} />
             <IOStore data={emulator.data_memory.io} />
+            <RegisterState registers={emulator.data_memory.registers} />
           </div>
         }
       </Connector>

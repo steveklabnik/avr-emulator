@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { formatHex, padInteger } from './helpers'
+import { formatHex, formatBinary, padInteger } from './helpers'
 
 export default class IOStore {
 
@@ -10,10 +10,19 @@ export default class IOStore {
       <div>
         <h2>I/O Registers</h2>
         <table>
+          <tr>
+            <td>$3f</td>
+            <td>SREG</td>
+            <td>{data[63]}</td>
+            <td>{formatBinary(data[63])}</td>
+          </tr>
+        </table>
+
+        <table>
           {data.map((value, address) =>
             <tr>
-              <td>R{padInteger(address, "0", 2)}</td>
-              <td>{formatHex(value)}</td>
+              <td>${padInteger(address, "0", 2)}</td>
+              <td>{formatBinary(value)}</td>
             </tr>
           )}
         </table>

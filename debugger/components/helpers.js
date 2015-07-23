@@ -1,8 +1,17 @@
-export function formatHex(integer) {
-  return padInteger(integer, "0", 2).toUpperCase();
+export function formatBinary(integer) {
+  return padInteger(integer, "0", 8, 2).toUpperCase();
 };
 
-export function padInteger(integer, padCharacter="0", length=2) {
-  var padding = new Array(length + 1).join( padCharacter );
-  return (padding + integer.toString(16)).slice(-length);
+export function formatHex(integer) {
+  return padInteger(integer, "0", 2, 16).toUpperCase();
+};
+
+export function padInteger(integer, padCharacter="0", length=2, base=16) {
+  if (typeof integer !== 'undefined') {
+    var padding = new Array(length + 1).join( padCharacter );
+    return (padding + integer.toString(base)).slice(-length);
+  }
+  else {
+    return "";
+  }
 };

@@ -37,7 +37,7 @@ fn main() {
 
             println!("Connection from {}", ip);
 
-            let program = "ldi r1,$0f\nreset ldi r0,$03\nadd r0,r1\ninc r2\njmp reset";
+            let program = "ldi r1,$ff\nreset ldi r0,$ff\nadd r0,r1\ninc r2\njmp reset";
             let mut emulator_instance = emulator::Emulator::new(program);
 
             let encoded = Message::Text(emulator::serialize(&emulator_instance));
