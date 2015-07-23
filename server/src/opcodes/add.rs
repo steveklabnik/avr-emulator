@@ -1,5 +1,3 @@
-use bit_vec::BitVec;
-
 use avr_bit_vec;
 use emulator::Emulator;
 use emulator::AvrDataMemory;
@@ -39,7 +37,7 @@ pub fn perform<'a>(emulator: &Emulator<'a>, rd: &str, rr: &str) -> Emulator<'a> 
     sreg.set(0, carry);
 
     // SREG Z
-    sreg.set(1, (register_result == 0));
+    sreg.set(1, (register_result == 0b00000000));
 
     // SREG N
     sreg.set(2, r_vec[7]);
