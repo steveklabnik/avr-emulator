@@ -5,18 +5,20 @@
     "react": "0.13.3",
     "react-redux": "^0.2.2",
     "redux": "1.0.0-rc",
-    "sass-loader": "^1.0.2"
+    "sass-loader": "^1.0.3" 
   },
   "devDependencies": {
     "babel": "^5.6.23",
     "babel-core": "^5.7.2",
     "babel-jest": "^5.3.0",
     "babel-loader": "^5.3.2",
+    "css-loader": "^0.15.5",
     "jest-cli": "^0.4.15",
     "node-libs-browser": "^0.5.2",
+    "react-hot-loader": "^1.2.8",
+    "style-loader": "^0.12.3",
     "webpack": "^1.10.1",
-    "webpack-dev-server": "^1.10.1",
-    "react-hot-loader": "^1.2.8"
+    "webpack-dev-server": "^1.10.1"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
@@ -34,6 +36,6 @@
   },
   "scripts": {
     "test": "BABEL_JEST_STAGE=1 jest",
-    "start": "sass ./stylesheets/main.scss:./dist/main.css && node server.js"
+    "start": "node server.js"
   }
 }
