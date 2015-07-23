@@ -25,14 +25,26 @@ export default class IOStore {
           <tr>
             <td>$3f</td>
             <td>SREG</td>
-            <td>I:{formatBinary(data[63])[0]}</td>
-            <td>T:{formatBinary(data[63])[1]}</td>
-            <td>H:{formatBinary(data[63])[2]}</td>
-            <td>S:{formatBinary(data[63])[3]}</td>
-            <td>V:{formatBinary(data[63])[4]}</td>
-            <td>N:{formatBinary(data[63])[5]}</td>
-            <td>Z:{formatBinary(data[63])[6]}</td>
-            <td>C:{formatBinary(data[63])[7]}</td>
+            <td>I:{formatBinary(data[0x3f])[0]}</td>
+            <td>T:{formatBinary(data[0x3f])[1]}</td>
+            <td>H:{formatBinary(data[0x3f])[2]}</td>
+            <td>S:{formatBinary(data[0x3f])[3]}</td>
+            <td>V:{formatBinary(data[0x3f])[4]}</td>
+            <td>N:{formatBinary(data[0x3f])[5]}</td>
+            <td>Z:{formatBinary(data[0x3f])[6]}</td>
+            <td>C:{formatBinary(data[0x3f])[7]}</td>
+          </tr>
+          <tr>
+            <td>$18</td>
+            <td>PORTB</td>
+            <td>PORTB7:{formatBinary(data[0x18])[0]}</td>
+            <td>PORTB6:{formatBinary(data[0x18])[1]}</td>
+            <td>PORTB5:{formatBinary(data[0x18])[2]}</td>
+            <td>PORTB4:{formatBinary(data[0x18])[3]}</td>
+            <td>PORTB3:{formatBinary(data[0x18])[4]}</td>
+            <td>PORTB2:{formatBinary(data[0x18])[5]}</td>
+            <td>PORTB1:{formatBinary(data[0x18])[6]}</td>
+            <td>PORTB0:{formatBinary(data[0x18])[7]}</td>
           </tr>
         </table>
       </div>
