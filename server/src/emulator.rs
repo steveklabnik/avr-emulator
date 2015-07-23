@@ -27,8 +27,8 @@ impl<'a> Emulator<'a> {
   pub fn new(program: &str) -> Emulator {
       Emulator {
         data_memory: AvrDataMemory {
-            registers: vec![0,0,0],
-            io: vec![],
+            registers: vec![0; 32],
+            io: vec![0; 64],
             ram: vec![]
         },
         program_pointer: 0,
@@ -41,6 +41,7 @@ impl<'a> ToJson for Emulator<'a> {
     fn to_json(&self) -> Json {
         let mut data_memory = BTreeMap::new();
         data_memory.insert("registers".to_string(), self.data_memory.registers.to_json());
+        data_memory.insert("io".to_string(), self.data_memory.io.to_json());
 
         let instructions = self.machine_code.instructions.iter().map(|x| x.raw.to_string()).collect::<Vec<String>>();
 
@@ -105,6 +106,6 @@ mod tests {
       emulator.data_memory.registers[1] = 2;
       emulator.data_memory.registers[2] = 3;
 
-      assert_eq!("{\"data_memory\":{\"registers\":[1,2,3]},\"instructions\":[\"add r1,r2\",\"add r0,r1\"],\"program_pointer\":0}", serialize(&emulator));
+      assert_eq!("{\"data_memory\":{\"io\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"registers\":[1,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"instructions\":[\"add r1,r2\",\"add r0,r1\"],\"program_pointer\":0}", serialize(&emulator));
   }
 }

@@ -2,7 +2,8 @@ import { WEBSOCKET_UPDATE } from '../actions/DebuggerActions';
 
 const initialState = {
   data_memory: {
-    registers: []
+    registers: [],
+    io: []
   },
   instructions: [],
   program_pointer: 0
