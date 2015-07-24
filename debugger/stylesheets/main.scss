@@ -1,7 +1,6 @@
-button {
-	color: black;
-}
-
 html {
 	background-color: white;
 }
+
+@import 'components/all';
+@import 'pages/all';

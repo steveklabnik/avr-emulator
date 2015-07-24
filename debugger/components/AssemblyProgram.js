@@ -1,16 +1,23 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames';
 
 export default class RegisterState {
 
   render() {
     const { instructions, programPointer } = this.props;
 
+    var assignClasses = function assignClasses(i) {
+      return classnames('test', {
+        'current-step': i === programPointer 
+      })
+    }
+
     return (
       <div>
         <h2>Program</h2>
         <code>
           {instructions.map((instruction, i) =>
-            <p style={{"background-color": (i === programPointer ? "#ddd" : "white")}}>{instruction}</p>
+            <p className={assignClasses(i)}>{instruction}</p>
           )}
         </code>
       </div>
