@@ -15,25 +15,9 @@ export function performStep() {
 }
 
 export function executeProgram() {
-	console.log('wtf')
-
-  return (dispatch, getState) => {
-    const { timerId } = getState();
-    if (timerId === null) {
-      const timerId = setInterval(() => {
-        dispatch({
-		    	type: WEBSOCKET_REQUEST,
-		    	socketMessageName: PERFORM_STEP,
-		    	socketMessage: {}
-		  	}) // a store supposed to save `timerId`
-        
-        console.log('tick')
-      }, 1000)
-      dispatch({
-		    type: WEBSOCKET_REQUEST,
-		    socketMessageName: PERFORM_STEP,
-		    socketMessage: {}
-		  }) // a store supposed to save `timerId`
-    }
-  }
+  return dispatch => {
+    setInterval(() => {
+      dispatch(performStep());
+    }, 250)
+  };
 }
