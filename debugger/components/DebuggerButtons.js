@@ -3,23 +3,21 @@ import React, { PropTypes } from 'react';
 export default class DebuggerButtons {
 
   handleStop = () => {
-    const { stopExecution, emulator } = this.props;
-    console.log(emulator);
-    stopExecution(emulator.executionId);
+    const { stopExecution, programRunner } = this.props;
+    stopExecution(programRunner.executionId);
   }
 
   render() {
-    const { performStep, executeProgram } = this.props;
+    const { performStep, executeProgram, programRunner } = this.props;
 
     return (
       <div>
         <h2>Debugger Actions</h2>
         <div className='controls'>
-          <button onClick={performStep}>Step</button>
-          <button onClick={executeProgram}>Run</button>
-          <button onClick={this.handleStop}>Stop</button>
+          <button disabled={programRunner.executionId} onClick={performStep}>Step</button>
+          <button disabled={programRunner.executionId} onClick={executeProgram}>Run</button>
+          <button disabled={!programRunner.executionId} onClick={this.handleStop}>Stop</button>
         </div>
-        <p>{emulator.executionId}</p>
       </div>
     );
   }
@@ -28,5 +26,5 @@ DebuggerButtons.propTypes = {
   performStep: PropTypes.func.isRequired,
   executeProgram: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
-  emulator: PropTypes.object.isRequired
+  programRunner: PropTypes.object.isRequired
 };

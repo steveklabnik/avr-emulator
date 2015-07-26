@@ -11,9 +11,9 @@ export default class EmulatorApp {
   render() {
     return (
       <Connector>
-        {({ emulator, dispatch }) =>
+        {({ emulator, programRunner, dispatch }) =>
           <div>
-            <DebuggerButtons emulator={emulator}
+            <DebuggerButtons programRunner={programRunner}
               {...bindActionCreators(DebuggerActions, dispatch)} />
             <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
             <IOStore data={emulator.data_memory.io} />
