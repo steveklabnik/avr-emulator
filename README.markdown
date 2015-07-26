@@ -32,7 +32,7 @@ From within the `./debugger` directory:
 
 ``` bash
 npm install
-./node_modules/webpack/bin/webpack.js # TODO: This isn't building to ./bundle.js any more - maybe react-hot-loader is interfering?
+./node_modules/webpack/bin/webpack.js --config webpack-production.config.js
 ```
 
 ## Development
