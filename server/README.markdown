@@ -30,19 +30,15 @@ docker push realscouteng/avr-emulator
 
 # Deployment
 
-#### Configure docker api to use Joyent
-
 See [Joyent Docs](https://apidocs.joyent.com/docker/) for more info
 
 ```bash
 bash sdc-docker-setup.sh https://us-east-1.api.joyent.com chris@realscout.com ~/.ssh/chris-triton
 ```
 
-**NB:** This will issue a new public ip address every time - I have a support ticket with Joyent asking how to keep a
-static ip address.
-
 ```bash
 docker run -p 8000:8000 -d realscouteng/avr-emulator
 ```
 
-
+**NB:** This will issue a new public ip address every time - I have a support ticket with Joyent asking how to keep a
+static ip address.
