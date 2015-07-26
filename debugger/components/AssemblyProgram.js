@@ -13,7 +13,7 @@ export default class RegisterState {
     }
 
     return (
-      <div className="program-container">
+      <div className="program-display">
         <h2>Program</h2>
         <code>
           {instructions.map((instruction, i) =>
