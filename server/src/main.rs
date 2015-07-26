@@ -9,7 +9,7 @@ use websocket::header::WebSocketProtocol;
 use avr::emulator;
 
 fn main() {
-    let server = Server::bind("127.0.0.1:2794").unwrap();
+    let server = Server::bind("0.0.0.0:8000").unwrap();
 
     for connection in server {
         // Spawn a new thread for each connection.
