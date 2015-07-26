@@ -1,3 +1,5 @@
+// TODO: Rename programRunner to debugger
+
 import { EXECUTE_PROGRAM, STOP_EXECUTION } from '../actions/DebuggerActions';
 
 const initialState = {
