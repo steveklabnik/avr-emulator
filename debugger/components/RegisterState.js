@@ -7,6 +7,7 @@ export default class RegisterState {
     const { registers } = this.props;
 
     return (
+<<<<<<< HEAD
       <div className="row">
         <div className="col-sm-12">
           <h2>Registers</h2>
@@ -47,6 +48,26 @@ export default class RegisterState {
             )}
           </table>
         </div>
+=======
+      <div className="registers">
+        <h2>Registers</h2>
+        <table>
+            <tr>
+              <th>R</th>
+              <th>Hex</th>
+              <th>Bin</th>
+              <th>Val</th>
+            </tr>
+          {registers.map((register, i) =>
+            <tr>
+              <td>R{padInteger(i, "0", 2, 10)}</td>
+              <td>{formatHex(register)}</td>
+              <td>{formatBinary(register)}</td>
+              <td>{padInteger(register, "0", 3, 10)}</td>
+            </tr>
+          )}
+        </table>
+>>>>>>> Initial styling pass
       </div>
     );
   }
