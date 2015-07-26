@@ -11,7 +11,7 @@ export default class DebuggerButtons {
     const { performStep, executeProgram, programRunner } = this.props;
 
     return (
-      <div>
+      <div className="debugger-controls">
         <h2>Debugger Actions</h2>
         <div className='controls'>
           <button disabled={programRunner.executionId} onClick={performStep}>Step</button>

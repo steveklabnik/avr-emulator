@@ -7,7 +7,7 @@ export default class RegisterState {
     const { registers } = this.props;
 
     return (
-      <div>
+      <div className="registers">
         <h2>Registers</h2>
         <table>
             <tr>

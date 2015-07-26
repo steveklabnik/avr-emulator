@@ -8,7 +8,7 @@ export default class IOStore {
     const { data } = this.props;
 
     return (
-      <div>
+      <div className="io-store">
         <h2>I/O Registers</h2>
         <table>
           <tr>
