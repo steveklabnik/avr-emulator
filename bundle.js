@@ -50,30 +50,34 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	//require("./stylesheets/main.scss");
-
 	var _redux = __webpack_require__(1);
 
 	var _reactRedux = __webpack_require__(14);
 
-	var _containersEmulatorApp = __webpack_require__(181);
+	var _reduxThunk = __webpack_require__(181);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _containersEmulatorApp = __webpack_require__(182);
 
 	var _containersEmulatorApp2 = _interopRequireDefault(_containersEmulatorApp);
 
-	var _reducers = __webpack_require__(190);
+	var _reducers = __webpack_require__(192);
 
 	var reducers = _interopRequireWildcard(_reducers);
 
-	var _middlewareWebsocket = __webpack_require__(192);
+	var _middlewareWebsocket = __webpack_require__(195);
 
 	var _middlewareWebsocket2 = _interopRequireDefault(_middlewareWebsocket);
 
-	var _initializersWebsocket = __webpack_require__(189);
+	var _initializersWebsocket = __webpack_require__(191);
 
 	var React = __webpack_require__(15);
+	__webpack_require__(196);
 
+	console.log(reducers);
 	var reducer = (0, _redux.combineReducers)(reducers);
-	var store = (0, _redux.applyMiddleware)(_middlewareWebsocket2['default'])(_redux.createStore)(reducer);
+	var store = (0, _redux.applyMiddleware)(_reduxThunk2['default'], _middlewareWebsocket2['default'])(_redux.createStore)(reducer);
 	(0, _initializersWebsocket.initializeSocketListener)(store);
 
 	var EmulatorProvider = React.createClass({
@@ -21557,6 +21561,28 @@
 
 /***/ },
 /* 181 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = thunkMiddleware;
+
+	function thunkMiddleware(_ref) {
+	  var dispatch = _ref.dispatch;
+	  var getState = _ref.getState;
+
+	  return function (next) {
+	    return function (action) {
+	      return typeof action === 'function' ? action(dispatch, getState) : next(action);
+	    };
+	  };
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21583,23 +21609,23 @@
 
 	var _reactRedux = __webpack_require__(14);
 
-	var _componentsRegisterState = __webpack_require__(185);
+	var _componentsRegisterState = __webpack_require__(187);
 
 	var _componentsRegisterState2 = _interopRequireDefault(_componentsRegisterState);
 
-	var _componentsIOStore = __webpack_require__(182);
+	var _componentsIOStore = __webpack_require__(183);
 
 	var _componentsIOStore2 = _interopRequireDefault(_componentsIOStore);
 
-	var _componentsDebuggerButtons = __webpack_require__(186);
+	var _componentsDebuggerButtons = __webpack_require__(188);
 
 	var _componentsDebuggerButtons2 = _interopRequireDefault(_componentsDebuggerButtons);
 
-	var _componentsAssemblyProgram = __webpack_require__(187);
+	var _componentsAssemblyProgram = __webpack_require__(189);
 
 	var _componentsAssemblyProgram2 = _interopRequireDefault(_componentsAssemblyProgram);
 
-	var _actionsDebuggerActions = __webpack_require__(188);
+	var _actionsDebuggerActions = __webpack_require__(190);
 
 	var DebuggerActions = _interopRequireWildcard(_actionsDebuggerActions);
 
@@ -21616,11 +21642,12 @@
 	        null,
 	        function (_ref) {
 	          var emulator = _ref.emulator;
+	          var programRunner = _ref.programRunner;
 	          var dispatch = _ref.dispatch;
 	          return _react2['default'].createElement(
 	            'div',
 	            null,
-	            _react2['default'].createElement(_componentsDebuggerButtons2['default'], _extends({ emulator: emulator
+	            _react2['default'].createElement(_componentsDebuggerButtons2['default'], _extends({ programRunner: programRunner
 	            }, (0, _redux.bindActionCreators)(DebuggerActions, dispatch))),
 	            _react2['default'].createElement(_componentsAssemblyProgram2['default'], { instructions: emulator.instructions, programPointer: emulator.program_pointer }),
 	            _react2['default'].createElement(_componentsIOStore2['default'], { data: emulator.data_memory.io }),
@@ -21638,7 +21665,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21657,11 +21684,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _helpers = __webpack_require__(183);
+	var _helpers = __webpack_require__(184);
 
-	var _classnames = __webpack_require__(184);
+	var _componentsIORegister = __webpack_require__(185);
 
-	var _classnames2 = _interopRequireDefault(_classnames);
+	var _componentsIORegister2 = _interopRequireDefault(_componentsIORegister);
 
 	var IOStore = (function () {
 	  function IOStore() {
@@ -21672,12 +21699,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var data = this.props.data;
-
-	      var assignClasses = function assignClasses(i) {
-	        return (0, _classnames2['default'])('io-num', {
-	          'current-store': i === "1"
-	        });
-	      };
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -21702,6 +21723,11 @@
 	              'th',
 	              null,
 	              'Name'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Hex'
 	            ),
 	            _react2['default'].createElement(
 	              'th',
@@ -21744,208 +21770,14 @@
 	              'Bit 0'
 	            )
 	          ),
-	          _react2['default'].createElement(
-	            'tr',
-	            null,
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              '$3f'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              'SREG'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[0]) },
-	              'I'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[1]) },
-	              'T'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[2]) },
-	              'H'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[3]) },
-	              'S'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[4]) },
-	              'V'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[5]) },
-	              'N'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[6]) },
-	              'Z'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[7]) },
-	              'C'
-	            )
-	          ),
-	          _react2['default'].createElement(
-	            'tr',
-	            null,
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              '$18'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              'PORTB'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[0]) },
-	              'PORTB7'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[1]) },
-	              'PORTB6'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[2]) },
-	              'PORTB5'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[3]) },
-	              'PORTB4'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[4]) },
-	              'PORTB3'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[5]) },
-	              'PORTB2'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[6]) },
-	              'PORTB1'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: "2", className: assignClasses((0, _helpers.formatBinary)(data[0x3f])[7]) },
-	              'PORTB0'
-	            )
-	          ),
-	          _react2['default'].createElement(
-	            'tr',
-	            null,
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              '$18'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              'PORTB'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB7'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[0]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB6'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[1]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB5'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[2]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB4'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[3]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB3'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[4]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB2'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[5]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB1'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[6]
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              { className: assignClasses() },
-	              'PORTB0'
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              (0, _helpers.formatBinary)(data[0x18])[7]
-	            )
-	          )
+	          _react2['default'].createElement(_componentsIORegister2['default'], { address: "$3f",
+	            data: data[0x3f],
+	            name: "SREG",
+	            bitNames: ['I', 'T', 'H', 'S', 'V', 'N', 'Z', 'C'] }),
+	          _react2['default'].createElement(_componentsIORegister2['default'], { address: "$18",
+	            data: data[0x18],
+	            name: "PORTB",
+	            bitNames: ['PORTB7', 'PORTB6', 'PORTB5', 'PORTB4', 'PORTB3', 'PORTB2', 'PORTB1', 'PORTB0'] })
 	        )
 	      );
 	    }
@@ -21962,7 +21794,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22002,7 +21834,90 @@
 	;
 
 /***/ },
-/* 184 */
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _react = __webpack_require__(15);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _helpers = __webpack_require__(184);
+
+	var _classnames = __webpack_require__(186);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var IORegister = (function () {
+	  function IORegister() {
+	    _classCallCheck(this, IORegister);
+	  }
+
+	  _createClass(IORegister, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var address = _props.address;
+	      var name = _props.name;
+	      var data = _props.data;
+	      var bitNames = _props.bitNames;
+
+	      var assignClasses = function assignClasses(i) {
+	        return (0, _classnames2['default'])('io-num', {
+	          'current-store': i === "1"
+	        });
+	      };
+
+	      var formattedBinary = (0, _helpers.formatBinary)(data);
+
+	      return _react2['default'].createElement(
+	        'tr',
+	        null,
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          address
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          name
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          (0, _helpers.formatHex)(data)
+	        ),
+	        formattedBinary.split("").map(function (bitValue, i) {
+	          return _react2['default'].createElement(
+	            'td',
+	            { colSpan: "2", className: assignClasses(bitValue) },
+	            bitNames[i]
+	          );
+	        })
+	      );
+	    }
+	  }]);
+
+	  return IORegister;
+	})();
+
+	exports['default'] = IORegister;
+	module.exports = exports['default'];
+
+/***/ },
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22057,7 +21972,7 @@
 
 
 /***/ },
-/* 185 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22076,7 +21991,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _helpers = __webpack_require__(183);
+	var _helpers = __webpack_require__(184);
 
 	var RegisterState = (function () {
 	  function RegisterState() {
@@ -22166,7 +22081,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 186 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22187,21 +22102,26 @@
 
 	var DebuggerButtons = (function () {
 	  function DebuggerButtons() {
+	    var _this = this;
+
 	    _classCallCheck(this, DebuggerButtons);
+
+	    this.handleStop = function () {
+	      var _props = _this.props;
+	      var stopExecution = _props.stopExecution;
+	      var programRunner = _props.programRunner;
+
+	      stopExecution(programRunner.executionId);
+	    };
 	  }
 
 	  _createClass(DebuggerButtons, [{
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var performStep = _props.performStep;
-	      var executeProgram = _props.executeProgram;
-
-	      var testProgram = function testProgram() {
-	        setInterval(function () {
-	          performStep();
-	        }, 1000);
-	      };
+	      var _props2 = this.props;
+	      var performStep = _props2.performStep;
+	      var executeProgram = _props2.executeProgram;
+	      var programRunner = _props2.programRunner;
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -22216,13 +22136,18 @@
 	          { className: 'controls' },
 	          _react2['default'].createElement(
 	            'button',
-	            { onClick: performStep },
+	            { disabled: programRunner.executionId, onClick: performStep },
 	            'Step'
 	          ),
 	          _react2['default'].createElement(
 	            'button',
-	            { onClick: testProgram },
-	            'Execute Program'
+	            { disabled: programRunner.executionId, onClick: executeProgram },
+	            'Run'
+	          ),
+	          _react2['default'].createElement(
+	            'button',
+	            { disabled: !programRunner.executionId, onClick: this.handleStop },
+	            'Stop'
 	          )
 	        )
 	      );
@@ -22237,12 +22162,13 @@
 	DebuggerButtons.propTypes = {
 	  performStep: _react.PropTypes.func.isRequired,
 	  executeProgram: _react.PropTypes.func.isRequired,
-	  emulator: _react.PropTypes.object.isRequired
+	  stopExecution: _react.PropTypes.func.isRequired,
+	  programRunner: _react.PropTypes.object.isRequired
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 187 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22261,7 +22187,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(184);
+	var _classnames = __webpack_require__(186);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -22318,7 +22244,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 188 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22327,9 +22253,11 @@
 	  value: true
 	});
 	exports.performStep = performStep;
+	exports.initializeExecution = initializeExecution;
 	exports.executeProgram = executeProgram;
+	exports.stopExecution = stopExecution;
 
-	var _initializersWebsocket = __webpack_require__(189);
+	var _initializersWebsocket = __webpack_require__(191);
 
 	var WEBSOCKET_REQUEST = 'websocketRequest';
 	exports.WEBSOCKET_REQUEST = WEBSOCKET_REQUEST;
@@ -22339,8 +22267,10 @@
 	var PERFORM_STEP = 'performStep';
 	exports.PERFORM_STEP = PERFORM_STEP;
 	var EXECUTE_PROGRAM = 'executeProgram';
-
 	exports.EXECUTE_PROGRAM = EXECUTE_PROGRAM;
+	var STOP_EXECUTION = 'stopExecution';
+
+	exports.STOP_EXECUTION = STOP_EXECUTION;
 
 	function performStep() {
 	  return {
@@ -22350,35 +22280,33 @@
 	  };
 	}
 
+	function initializeExecution(executionId) {
+	  return {
+	    type: EXECUTE_PROGRAM,
+	    executionId: executionId
+	  };
+	}
+
 	function executeProgram() {
-	  console.log('wtf');
+	  return function (dispatch) {
+	    var executionId = setInterval(function () {
+	      dispatch(performStep());
+	    }, 250);
 
-	  return function (dispatch, getState) {
-	    var _getState = getState();
+	    dispatch(initializeExecution(executionId));
+	  };
+	}
 
-	    var timerId = _getState.timerId;
-
-	    if (timerId === null) {
-	      var _timerId = setInterval(function () {
-	        dispatch({
-	          type: WEBSOCKET_REQUEST,
-	          socketMessageName: PERFORM_STEP,
-	          socketMessage: {}
-	        }); // a store supposed to save `timerId`
-
-	        console.log('tick');
-	      }, 1000);
-	      dispatch({
-	        type: WEBSOCKET_REQUEST,
-	        socketMessageName: PERFORM_STEP,
-	        socketMessage: {}
-	      }); // a store supposed to save `timerId`
-	    }
+	function stopExecution(executionId) {
+	  clearInterval(executionId);
+	  return {
+	    type: STOP_EXECUTION,
+	    executionId: executionId
 	  };
 	}
 
 /***/ },
-/* 189 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22388,7 +22316,7 @@
 	});
 	exports.initializeSocketListener = initializeSocketListener;
 
-	var _actionsDebuggerActions = __webpack_require__(188);
+	var _actionsDebuggerActions = __webpack_require__(190);
 
 	var socket = new WebSocket("ws://72.2.112.220:8000", "rust-websocket");
 
@@ -22404,7 +22332,7 @@
 	}
 
 /***/ },
-/* 190 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22415,12 +22343,16 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _emulator = __webpack_require__(191);
+	var _Emulator = __webpack_require__(193);
 
-	exports.emulator = _interopRequire(_emulator);
+	exports.emulator = _interopRequire(_Emulator);
+
+	var _ProgramRunner = __webpack_require__(194);
+
+	exports.programRunner = _interopRequire(_ProgramRunner);
 
 /***/ },
-/* 191 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22430,7 +22362,7 @@
 	});
 	exports['default'] = emulator;
 
-	var _actionsDebuggerActions = __webpack_require__(188);
+	var _actionsDebuggerActions = __webpack_require__(190);
 
 	var initialState = {
 	  data_memory: {
@@ -22455,7 +22387,45 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 192 */
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// TODO: Rename programRunner to debugger
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = programRunner;
+
+	var _actionsDebuggerActions = __webpack_require__(190);
+
+	var initialState = {
+	  executionId: null
+	};
+
+	function programRunner(state, action) {
+	  if (state === undefined) state = initialState;
+
+	  switch (action.type) {
+	    case _actionsDebuggerActions.EXECUTE_PROGRAM:
+	      return {
+	        executionId: action.executionId
+	      };
+	    case _actionsDebuggerActions.STOP_EXECUTION:
+	      return {
+	        executionId: null
+	      };
+	    default:
+	      return state;
+	  }
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22467,7 +22437,7 @@
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var _initializersWebsocket = __webpack_require__(189);
+	var _initializersWebsocket = __webpack_require__(191);
 
 	function websocketMiddleware(_ref) {
 	  var dispatch = _ref.dispatch;
@@ -22498,6 +22468,327 @@
 	}
 
 	module.exports = exports['default'];
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(197);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(199)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./main.scss", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./main.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(198)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "html {\n  background-color: white; }\n\n.current-step {\n  background-color: #ddd; }\n\n.io-num {\n  color: grey; }\n  .io-num.current-store {\n    color: blue; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 198 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0;
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function createStyleElement() {
+		var styleElement = document.createElement("style");
+		var head = getHeadElement();
+		styleElement.type = "text/css";
+		head.appendChild(styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement() {
+		var linkElement = document.createElement("link");
+		var head = getHeadElement();
+		linkElement.rel = "stylesheet";
+		head.appendChild(linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement());
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement();
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement();
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ }
 /******/ ]);
