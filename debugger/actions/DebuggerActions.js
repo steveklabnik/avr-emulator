@@ -5,6 +5,7 @@ export const WEBSOCKET_UPDATE = 'websocketUpdate';
 
 export const PERFORM_STEP = 'performStep';
 export const EXECUTE_PROGRAM = 'executeProgram';
+export const STOP_EXECUTION = 'stopExecution';
 
 export function performStep() {
   return {
@@ -14,10 +15,29 @@ export function performStep() {
   };
 }
 
+export function initializeExecution(executionId) {
+  console.log('initialize execution in action');
+  return {
+    type: EXECUTE_PROGRAM,
+    executionId: executionId
+  }
+}
+
 export function executeProgram() {
   return dispatch => {
-    setInterval(() => {
+    var executionId = setInterval(() => {
       dispatch(performStep());
-    }, 250)
+    }, 250);
+
+    dispatch(initializeExecution(executionId));
+  };
+}
+
+export function stopExecution(executionId) {
+  clearInterval(executionId);
+  console.log('stopped in action', executionId);
+  return {
+    type: STOP_EXECUTION,
+    executionId: executionId,
   };
 }
