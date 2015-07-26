@@ -1,9 +1,13 @@
-### Deploying
+# Deploying
+
+### Build bundle.js
 
 ```
 git co master
 ./node_modules/webpack/bin/webpack.js --config webpack-production.config.js
 ```
+
+### Update `gh-pages` branch
 
 ```
 git co gh-pages
@@ -12,11 +16,16 @@ mv debugger/index.html ./
 sed 's/localhost:8000/72.2.112.220:8000/g' debugger/dist/bundle.js > bundle.js
 ```
 
+### Push change to `origin/gh-pages`
+
 ```
+git add .
+git commit -m 'updated github pages build'
 git push
 ```
+
+### Move back to `master`
 
 ```
 git co master
 ```
-
