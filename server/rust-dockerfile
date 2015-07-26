@@ -1,0 +1,32 @@
+#
+# Ubuntu Dockerfile
+#
+# https://github.com/dockerfile/ubuntu
+#
+
+# Pull base image.
+FROM ubuntu:14.04
+
+# Install.
+RUN \
+  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y build-essential && \
+  apt-get install -y software-properties-common && \
+  apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get install -y libssl-dev && \
+  rm -rf /var/lib/apt/lists/*
+
+RUN \
+  curl -s https://static.rust-lang.org/rustup.sh > /home/install.sh && \
+  chmod +x /home/install.sh && \
+  bash /home/install.sh --disable-sudo -y
+
+# Set environment variables.
+ENV HOME /root
+
+WORKDIR /root/avr-emulator
+
+# Define default command.
+CMD ["bash"]

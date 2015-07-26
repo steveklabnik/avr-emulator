@@ -1,0 +1,15 @@
+FROM rust
+
+ENV HOME /root
+
+WORKDIR /root/avr-emulator
+
+RUN ls -la ./
+COPY ./ /root/avr-emulator
+
+EXPOSE 8000
+
+RUN cargo build --verbose
+
+# Define default command.
+CMD ["cargo", "run"]
