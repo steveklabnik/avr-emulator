@@ -25,7 +25,7 @@ export default class EmulatorApp {
               <p>
                 Inspired by&nbsp;
                 <a href="http://sockpuppet.org/blog/2015/07/13/starfighter/">
-                  Starfighter's Summer 2015 announcement</a>,
+                  Starfighters Summer 2015 announcement</a>,
                   we thought implementing our own Emulator would be a great problem to tackle
                   to dive a little deeper into with a few technologies
                   we wanted to get our hands on.
