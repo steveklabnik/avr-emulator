@@ -8,8 +8,10 @@ export default class RegisterState {
 
     return (
       <div className="row">
-        <h2>Registers</h2>
-        <div className="col-sm-3">
+        <div className="col-sm-12">
+          <h2>Registers</h2>
+        </div>
+        <div className="col-sm-4">
           <table>
               <tr>
                 <th>R</th>
@@ -27,7 +29,7 @@ export default class RegisterState {
             )}
           </table>
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-4">
           <table>
               <tr>
                 <th>R</th>
