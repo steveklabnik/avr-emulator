@@ -1,10 +1,10 @@
-button {
+@mixin onOffStates (testing) {
     border: 1px solid $mainBlue;
     background-color: transparent;
     color: $mainBlue;
     cursor: pointer;
 
-    &:hover {
+    &.#{testing} {
     	background-color: $hoverBlue;
     	border: 1px solid $hoverBlue;
 	    box-shadow: 0 0 7px $hoverBlue;
