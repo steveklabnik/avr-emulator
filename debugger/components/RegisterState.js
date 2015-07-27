@@ -11,7 +11,7 @@ export default class RegisterState {
         <div className="col-sm-12">
           <h2>Registers</h2>
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-6">
           <table>
               <tr>
                 <th>R</th>
@@ -29,7 +29,7 @@ export default class RegisterState {
             )}
           </table>
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-6">
           <table>
               <tr>
                 <th>R</th>
