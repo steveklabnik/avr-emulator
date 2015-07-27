@@ -11,14 +11,12 @@ This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for re
 
 Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/2015/07/13/starfighter/), we thought implementing our own Emulator would be a great problem to tackle to dive a little deeper into with a few technologies we wanted to get our hands on. During our last biweekly hack day, we dove in and few days later, we had a barebones working version.
 
-## Installing
+## Development
 
 #### Requirements
 
 * [Rust 1.1](http://www.rust-lang.org/install.html)
 * [Node >=0.10.32](https://nodejs.org/download/)
-
-## Development
 
 Start node server to activate [react-hot-loader](https://github.com/gaearon/react-hot-loader) from within the `./debugger` directory
 
