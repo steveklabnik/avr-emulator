@@ -54,4 +54,7 @@ There is still a lot of ground to cover - here's what's top of mind:
 
 ## About RealScout
 
-We [pair program](http://eatcodeplay.com/why-we-killed-off-code-reviews/), hold [hack days](https://twitter.com/chrisconley/status/618830194971774976) every other Friday and have recently improved **test coverage** from **45% to 80%**. The focus seems to be paying off: Our agents have closed **$440 million** in sales with RealScout over the last 6 months. 
+We [pair program](http://eatcodeplay.com/why-we-killed-off-code-reviews/), hold [hack days](https://twitter.com/chrisconley/status/618830194971774976) every other Friday and have recently improved **test coverage** from **45% to 80%**. The focus seems to be paying off: Our agents have closed **$440 million** in sales with RealScout over the last 6 months.
+
+Blog: [eatcodeplay.com](http://eatcodeplay.com/)
+Twitter: [@realscouteng](https://twitter.com/realscouteng)
