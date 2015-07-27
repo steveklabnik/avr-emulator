@@ -13,19 +13,19 @@ Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/
 
 ## Reducers
 
-We've fallen in love with [redux's](https://github.com/gaearon/redux) reducers, so we decided to take them to the server as well.
-
-From Redux's docs, a reducer is:
+We've fallen in love with [redux's](https://github.com/gaearon/redux) reducers, so we decided to take them to the server as well. From their docs, a reducer is:
 
 ```
 (previousState, action) => newState
 ```
 
-In the emulator, `previousState` and `newState` capture all the bits in the Registers, IO, and SRAM, etc. The action is the next instruction (ex: `inc r1`):
+In the emulator, `previousState` and `newState` capture the emulator's memory: Registers, IO, and SRAM, etc. The action is the next instruction (ex: `inc r1`):
 
 ```
-(previousEmulatorState, instruction) => newEmulatorState
+(previousEmulatorMemory, instruction) => newEmulatorMemory
 ```
+
+Here is the complete diagram of how everything works together. (The reducers are in yellow)
 
 <img src="https://s3.amazonaws.com/uploads.hipchat.com/65625/949611/xi6FKFfeeXLYsjI/Rust-React%20Emulator.png"/>
 
