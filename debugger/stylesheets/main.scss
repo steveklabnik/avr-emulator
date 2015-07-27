@@ -5,5 +5,9 @@ html {
   color: #333;
 }
 
+button:disabled {
+  color: #999;
+}
+
 @import 'components/all';
 @import 'pages/all';
