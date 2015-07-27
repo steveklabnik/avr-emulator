@@ -21646,12 +21646,70 @@
 	          var dispatch = _ref.dispatch;
 	          return _react2['default'].createElement(
 	            'div',
-	            null,
-	            _react2['default'].createElement(_componentsDebuggerButtons2['default'], _extends({ programRunner: programRunner
-	            }, (0, _redux.bindActionCreators)(DebuggerActions, dispatch))),
-	            _react2['default'].createElement(_componentsAssemblyProgram2['default'], { instructions: emulator.instructions, programPointer: emulator.program_pointer }),
-	            _react2['default'].createElement(_componentsIOStore2['default'], { data: emulator.data_memory.io }),
-	            _react2['default'].createElement(_componentsRegisterState2['default'], { registers: emulator.data_memory.registers })
+	            { className: "row" },
+	            _react2['default'].createElement(
+	              'div',
+	              { className: "col-sm-12" },
+	              _react2['default'].createElement(
+	                'h1',
+	                { className: 'main-title' },
+	                'Atmel AVR 8-bit Emulator in React and Rust'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              { className: "col-sm-4" },
+	              _react2['default'].createElement(
+	                'div',
+	                { className: 'program panel' },
+	                _react2['default'].createElement(
+	                  'h2',
+	                  null,
+	                  'Program'
+	                ),
+	                _react2['default'].createElement(_componentsDebuggerButtons2['default'], _extends({ programRunner: programRunner
+	                }, (0, _redux.bindActionCreators)(DebuggerActions, dispatch))),
+	                _react2['default'].createElement(_componentsAssemblyProgram2['default'], { instructions: emulator.instructions, programPointer: emulator.program_pointer })
+	              ),
+	              _react2['default'].createElement(
+	                'div',
+	                { className: 'panel' },
+	                _react2['default'].createElement(
+	                  'h2',
+	                  null,
+	                  'About'
+	                ),
+	                _react2['default'].createElement(
+	                  'p',
+	                  null,
+	                  'Inspired by ',
+	                  _react2['default'].createElement(
+	                    'a',
+	                    { href: "http://sockpuppet.org/blog/2015/07/13/starfighter/" },
+	                    'Starfighter\'s Summer 2015 announcement'
+	                  ),
+	                  ', we thought that implementing our own ',
+	                  _react2['default'].createElement(
+	                    'a',
+	                    { href: "http://www.atmel.com/images/atmel-0856-avr-instruction-set-manual.pdf" },
+	                    'Atmel AVR 8-bit'
+	                  ),
+	                  ' emulator would be a pretty fun problem to tackle. Built with React.js, Redux.js, Rust and Docker during our last ',
+	                  _react2['default'].createElement(
+	                    'a',
+	                    { href: "https://twitter.com/chrisconley/status/618830194971774976" },
+	                    'biweekly hack day'
+	                  ),
+	                  '.'
+	                )
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              { className: "col-sm-8" },
+	              _react2['default'].createElement(_componentsIOStore2['default'], { data: emulator.data_memory.io }),
+	              _react2['default'].createElement(_componentsRegisterState2['default'], { registers: emulator.data_memory.registers })
+	            )
 	          );
 	        }
 	      );
@@ -21702,7 +21760,7 @@
 
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
+	        { className: "io-store panel" },
 	        _react2['default'].createElement(
 	          'h2',
 	          null,
@@ -22005,66 +22063,141 @@
 
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
+	        { className: "row registers panel" },
 	        _react2['default'].createElement(
-	          'h2',
-	          null,
-	          'Registers'
+	          'div',
+	          { className: "col-sm-12" },
+	          _react2['default'].createElement(
+	            'h2',
+	            null,
+	            'Registers'
+	          )
 	        ),
 	        _react2['default'].createElement(
-	          'table',
-	          null,
+	          'div',
+	          { className: "col-sm-6" },
 	          _react2['default'].createElement(
-	            'tr',
+	            'table',
 	            null,
 	            _react2['default'].createElement(
-	              'th',
-	              null,
-	              'R'
-	            ),
-	            _react2['default'].createElement(
-	              'th',
-	              null,
-	              'Hex'
-	            ),
-	            _react2['default'].createElement(
-	              'th',
-	              null,
-	              'Bin'
-	            ),
-	            _react2['default'].createElement(
-	              'th',
-	              null,
-	              'Val'
-	            )
-	          ),
-	          registers.map(function (register, i) {
-	            return _react2['default'].createElement(
 	              'tr',
 	              null,
 	              _react2['default'].createElement(
-	                'td',
+	                'th',
 	                null,
-	                'R',
-	                (0, _helpers.padInteger)(i, "0", 2, 10)
+	                'R'
 	              ),
 	              _react2['default'].createElement(
-	                'td',
+	                'th',
 	                null,
-	                (0, _helpers.formatHex)(register)
+	                'Hex'
 	              ),
 	              _react2['default'].createElement(
-	                'td',
+	                'th',
 	                null,
-	                (0, _helpers.formatBinary)(register)
+	                'Bin'
 	              ),
 	              _react2['default'].createElement(
-	                'td',
+	                'th',
 	                null,
-	                (0, _helpers.padInteger)(register, "0", 3, 10)
+	                'Val'
 	              )
-	            );
-	          })
+	            ),
+	            registers.slice(0, 16).map(function (register, i) {
+	              return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  _react2['default'].createElement(
+	                    'strong',
+	                    null,
+	                    'R',
+	                    (0, _helpers.padInteger)(i, "0", 2, 10)
+	                  )
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.formatHex)(register)
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.formatBinary)(register)
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.padInteger)(register, "0", 3, 10)
+	                )
+	              );
+	            })
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: "col-sm-6" },
+	          _react2['default'].createElement(
+	            'table',
+	            null,
+	            _react2['default'].createElement(
+	              'tr',
+	              null,
+	              _react2['default'].createElement(
+	                'th',
+	                null,
+	                'R'
+	              ),
+	              _react2['default'].createElement(
+	                'th',
+	                null,
+	                'Hex'
+	              ),
+	              _react2['default'].createElement(
+	                'th',
+	                null,
+	                'Bin'
+	              ),
+	              _react2['default'].createElement(
+	                'th',
+	                null,
+	                'Val'
+	              )
+	            ),
+	            registers.slice(15, -1).map(function (register, i) {
+	              return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  _react2['default'].createElement(
+	                    'strong',
+	                    null,
+	                    'R',
+	                    (0, _helpers.padInteger)(i + 16, "0", 2, 10)
+	                  )
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.formatHex)(register)
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.formatBinary)(register)
+	                ),
+	                _react2['default'].createElement(
+	                  'td',
+	                  null,
+	                  (0, _helpers.padInteger)(register, "0", 3, 10)
+	                )
+	              );
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -22125,12 +22258,7 @@
 
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
-	        _react2['default'].createElement(
-	          'h2',
-	          null,
-	          'Debugger Actions'
-	        ),
+	        { className: "debugger-controls" },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'controls' },
@@ -22204,19 +22332,14 @@
 	      var programPointer = _props.programPointer;
 
 	      var assignClasses = function assignClasses(i) {
-	        return (0, _classnames2['default'])('test', {
+	        return (0, _classnames2['default'])('line', {
 	          'current-step': i === programPointer
 	        });
 	      };
 
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
-	        _react2['default'].createElement(
-	          'h2',
-	          null,
-	          'Program'
-	        ),
+	        { className: "program-display" },
 	        _react2['default'].createElement(
 	          'code',
 	          null,
@@ -22318,7 +22441,7 @@
 
 	var _actionsDebuggerActions = __webpack_require__(190);
 
-	var socket = new WebSocket("ws://72.2.112.229:8000", "rust-websocket");
+	var socket = new WebSocket("ws://72.2.119.250:8000", "rust-websocket");
 
 	exports.socket = socket;
 
@@ -22504,7 +22627,7 @@
 
 
 	// module
-	exports.push([module.id, "html {\n  background-color: white; }\n\n.current-step {\n  background-color: #ddd; }\n\n.io-num {\n  color: grey; }\n  .io-num.current-store {\n    color: blue; }\n", ""]);
+	exports.push([module.id, "html {\n  font-family: monospace;\n  font-size: 14px;\n  color: #333; }\n\nhtml {\n  background-color: #111;\n  text-shadow: 0 0 5px #18CAE6;\n  color: #18CAE6; }\n\nbody {\n  font-family: Consolas;\n  letter-spacing: 2px; }\n\nbutton {\n  border: 1px solid #18CAE6;\n  background-color: transparent;\n  color: #18CAE6;\n  cursor: pointer; }\n  button:hover {\n    background-color: rgba(117, 224, 240, 0.72);\n    border: 1px solid rgba(117, 224, 240, 0.72);\n    box-shadow: 0 0 7px rgba(117, 224, 240, 0.72);\n    color: #CBEAFE; }\n  button:disabled {\n    color: #999;\n    border: 1px solid #999; }\n\na {\n  color: #CBEAFE; }\n  a:hover {\n    color: #fff; }\n\n.panel {\n  border: 4px double #18CAE6;\n  padding: 10px;\n  margin: 10px; }\n\n.main-title {\n  text-align: center; }\n\n.program-display .line {\n  transition: all 0.1s linear; }\n\n.program-display .current-step {\n  color: #CBEAFE;\n  background-color: rgba(117, 224, 240, 0.72);\n  box-shadow: 0 0 7px rgba(117, 224, 240, 0.72);\n  width: 100%;\n  transition: all 0.3s linear; }\n\n.io-store {\n  font-size: 90%; }\n  .io-store .io-num {\n    color: #18CAE6; }\n    .io-store .io-num.current-store {\n      color: #CBEAFE;\n      text-shadow: 0 0 7px #CBEAFE; }\n\n.debugger-controls .controls {\n  display: flex;\n  width: 100%;\n  justify-content: space-around; }\n\n#footer {\n  display: flex;\n  justify-content: center;\n  text-align: center; }\n\n.program-display .line {\n  transition: all 0.1s linear; }\n\n.program-display .current-step {\n  color: #CBEAFE;\n  background-color: rgba(117, 224, 240, 0.72);\n  box-shadow: 0 0 7px rgba(117, 224, 240, 0.72);\n  width: 100%;\n  transition: all 0.3s linear; }\n\n.io-store {\n  font-size: 90%; }\n  .io-store .io-num {\n    color: #18CAE6; }\n    .io-store .io-num.current-store {\n      color: #CBEAFE;\n      text-shadow: 0 0 7px #CBEAFE; }\n\n.debugger-controls .controls {\n  display: flex;\n  width: 100%;\n  justify-content: space-around; }\n", ""]);
 
 	// exports
 
