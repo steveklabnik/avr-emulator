@@ -2,10 +2,11 @@
 	font-size: 90%;
 
 	.io-num {
-		color: grey;
+		color: $mainBlue;
 
 		&.current-store {
-			color: blue;
+			color: $highlightColor;
+		    text-shadow: 0 0 7px $highlightColor;
 		}
 	}
 }

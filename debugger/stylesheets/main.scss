@@ -5,10 +5,7 @@ html {
   color: #333;
 }
 
-button:disabled {
-  color: #999;
-}
-
+@import 'vendor/all';
 @import 'utils/all';
 @import 'base/all';
 @import 'components/all';

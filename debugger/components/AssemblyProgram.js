@@ -13,8 +13,7 @@ export default class RegisterState {
     }
 
     return (
-      <div className="program-display panel">
-        <h2>Program</h2>
+      <div className="program-display">
         <code>
           {instructions.map((instruction, i) =>
             <p className={assignClasses(i)}>{instruction}</p>

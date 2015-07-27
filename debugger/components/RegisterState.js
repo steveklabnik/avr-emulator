@@ -7,7 +7,7 @@ export default class RegisterState {
     const { registers } = this.props;
 
     return (
-      <div className="row registers">
+      <div className="row registers panel">
         <div className="col-sm-12">
           <h2>Registers</h2>
         </div>
