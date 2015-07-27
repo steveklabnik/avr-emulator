@@ -14,7 +14,6 @@ export default class RegisterState {
 
     return (
       <div>
-        <h2>Program</h2>
         <code>
           {instructions.map((instruction, i) =>
             <p className={assignClasses(i)}>{instruction}</p>

@@ -12,12 +12,17 @@ export default class EmulatorApp {
     return (
       <Connector>
         {({ emulator, programRunner, dispatch }) =>
-          <div>
-            <DebuggerButtons programRunner={programRunner}
-              {...bindActionCreators(DebuggerActions, dispatch)} />
-            <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
-            <IOStore data={emulator.data_memory.io} />
-            <RegisterState registers={emulator.data_memory.registers} />
+          <div className="row">
+            <div className="col-sm-4">
+              <h2>Program</h2>
+              <DebuggerButtons programRunner={programRunner}
+                {...bindActionCreators(DebuggerActions, dispatch)} />
+              <AssemblyProgram instructions={emulator.instructions} programPointer={emulator.program_pointer} />
+            </div>
+            <div className="col-sm-8">
+              <IOStore data={emulator.data_memory.io} />
+              <RegisterState registers={emulator.data_memory.registers} />
+            </div>
           </div>
         }
       </Connector>

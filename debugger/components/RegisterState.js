@@ -7,24 +7,44 @@ export default class RegisterState {
     const { registers } = this.props;
 
     return (
-      <div>
+      <div className="row">
         <h2>Registers</h2>
-        <table>
-            <tr>
-              <th>R</th>
-              <th>Hex</th>
-              <th>Bin</th>
-              <th>Val</th>
-            </tr>
-          {registers.map((register, i) =>
-            <tr>
-              <td>R{padInteger(i, "0", 2, 10)}</td>
-              <td>{formatHex(register)}</td>
-              <td>{formatBinary(register)}</td>
-              <td>{padInteger(register, "0", 3, 10)}</td>
-            </tr>
-          )}
-        </table>
+        <div className="col-sm-3">
+          <table>
+              <tr>
+                <th>R</th>
+                <th>Hex</th>
+                <th>Bin</th>
+                <th>Val</th>
+              </tr>
+            {registers.slice(0, 16).map((register, i) =>
+              <tr>
+                <td><strong>R{padInteger(i, "0", 2, 10)}</strong></td>
+                <td>{formatHex(register)}</td>
+                <td>{formatBinary(register)}</td>
+                <td>{padInteger(register, "0", 3, 10)}</td>
+              </tr>
+            )}
+          </table>
+        </div>
+        <div className="col-sm-3">
+          <table>
+              <tr>
+                <th>R</th>
+                <th>Hex</th>
+                <th>Bin</th>
+                <th>Val</th>
+              </tr>
+            {registers.slice(15, -1).map((register, i) =>
+              <tr>
+                <td><strong>R{padInteger(i+16, "0", 2, 10)}</strong></td>
+                <td>{formatHex(register)}</td>
+                <td>{formatBinary(register)}</td>
+                <td>{padInteger(register, "0", 3, 10)}</td>
+              </tr>
+            )}
+          </table>
+        </div>
       </div>
     );
   }

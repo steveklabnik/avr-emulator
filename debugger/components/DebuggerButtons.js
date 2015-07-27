@@ -12,7 +12,6 @@ export default class DebuggerButtons {
 
     return (
       <div>
-        <h2>Debugger Actions</h2>
         <div className='controls'>
           <button disabled={programRunner.executionId} onClick={performStep}>Step</button>
           <button disabled={programRunner.executionId} onClick={executeProgram}>Run</button>

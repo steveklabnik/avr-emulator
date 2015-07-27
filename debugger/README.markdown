@@ -15,7 +15,7 @@ cd ../
 git co gh-pages
 git co master -- debugger/index.html
 mv debugger/index.html ./
-sed 's/localhost:8000/72.2.112.220:8000/g' debugger/dist/bundle.js > bundle.js
+sed 's/localhost:8000/72.2.112.229:8000/g' debugger/dist/bundle.js > bundle.js
 ```
 
 ### Push change to `origin/gh-pages`
