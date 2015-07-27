@@ -13,7 +13,6 @@ pub fn perform<'a>(emulator: &Emulator<'a>, a: &str, rd: &str) -> Emulator<'a> {
 
     let registers = &emulator.data_memory.registers;
     let mut new_io = emulator.data_memory.io.to_vec();
-    println!("IO Adress: {}", io_address);
     new_io[io_address as usize] = registers[rd_index];
 
     ///////////////////////////////////////////////////
