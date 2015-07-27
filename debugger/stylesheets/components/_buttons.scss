@@ -8,5 +8,19 @@ button {
     	background-color: $hoverBlue;
     	border: 1px solid $hoverBlue;
 	    box-shadow: 0 0 7px $hoverBlue;
+	    color: $highlightColor;
     }
+
+    &:disabled {
+		color: #999;
+		border: 1px solid #999;
+    }
+}
+
+a {
+	color: $highlightColor;
+
+	&:hover {
+		color: $highlightHoverColor;
+	}
 }

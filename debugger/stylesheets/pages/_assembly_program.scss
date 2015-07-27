@@ -3,7 +3,9 @@
 	    transition: all .1s linear;
 	}
 	.current-step {
+		color: $highlightColor;
 		background-color: $hoverBlue;
+	    box-shadow: 0 0 7px $hoverBlue;
 		width: 100%;
 	    transition: all .3s linear;	
 
