@@ -18,23 +18,6 @@ Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/
 * [Rust 1.1](http://www.rust-lang.org/install.html)
 * [Node >=0.10.32](https://nodejs.org/download/)
 
-#### Building the Rust Server
-
-From within the `./server` directory:
-
-``` bash
-cargo build
-```
-
-#### Building `./demo.js`
-
-From within the `./debugger` directory:
-
-``` bash
-npm install
-./node_modules/webpack/bin/webpack.js --config webpack-production.config.js
-```
-
 ## Development
 
 Start node server to activate [react-hot-loader](https://github.com/gaearon/react-hot-loader) from within the `./debugger` directory
@@ -46,7 +29,7 @@ npm start
 Start Rust websocket server from within the `./server` directory
 
 ``` bash
-cargo run
+cargo run # will build and run
 ```
 
 Navigate to http://localhost:3000/index.html
