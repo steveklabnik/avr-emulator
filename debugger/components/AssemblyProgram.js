@@ -13,7 +13,7 @@ export default class RegisterState {
     }
 
     return (
-      <div className="program-display">
+      <div className="program-display panel">
         <h2>Program</h2>
         <code>
           {instructions.map((instruction, i) =>
