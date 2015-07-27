@@ -21,6 +21,12 @@ From Redux's docs, a reducer is:
 (previousState, action) => newState
 ```
 
+In the emulator, this becomes:
+
+```
+(previousEmulatorState, instruction) => newEmulatorState
+```
+
 <img src="https://s3.amazonaws.com/uploads.hipchat.com/65625/949611/xi6FKFfeeXLYsjI/Rust-React%20Emulator.png"/>
 
 ## Development
