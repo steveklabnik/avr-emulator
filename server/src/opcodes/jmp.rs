@@ -25,7 +25,7 @@ mod tests {
 
   #[test]
   fn can_jmp() {
-      let program = "add r0,r0\nadd r0,r0\nadd r0,r0\nspecial inc r0";
+      let program = "add r0,r0\nadd r0,r0\nadd r0,r0\nspecial: inc r0";
       let mut emulator = Emulator::new(program);
       emulator = perform(&emulator, "special");
       assert_eq!(3, emulator.program_pointer);

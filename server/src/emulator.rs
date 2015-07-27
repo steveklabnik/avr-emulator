@@ -75,8 +75,9 @@ pub fn step<'a>(emulator: &Emulator<'a>) -> Emulator<'a> {
       "inc" => opcodes::inc(&emulator, &instruction.operands[0]),
       "jmp" => opcodes::jmp(&emulator, &instruction.operands[0]),
       "ldi" => opcodes::ldi(&emulator, &instruction.operands[0], &instruction.operands[1]),
+      "nop" => opcodes::nop(&emulator),
       "out" => opcodes::out(&emulator, &instruction.operands[0], &instruction.operands[1]),
-      _ => opcodes::add(&emulator, &instruction.operands[0], &instruction.operands[1])
+      _ => opcodes::nop(&emulator)
     }
 }
 

@@ -14,19 +14,35 @@ pub struct Instruction<'a> {
     pub operands: Vec<&'a str>
 }
 
-pub fn parse_instruction<'a>(instruction: &'a str) -> Instruction<'a> {
-    println!("instruction::: {}", instruction);
-    let instruction_iterator = instruction.split(" ");
-    let mut instruction_vector = instruction_iterator.collect::<Vec<&str>>();
+pub fn parse_instruction<'a>(raw: &'a str) -> Instruction<'a> {
+    // Split line into a vector by ":"
+    let raw = raw.trim();
+    let line = raw.split(":");
+    let mut line = line.collect::<Vec<&str>>();
 
-    let operands_iterator = instruction_vector.pop().unwrap().split(",");
-    let operands_vector = operands_iterator.collect::<Vec<&str>>();
+    // Pop everything to the right of ":"
+    // into instruction vector
+    let instruction = line.pop().unwrap().trim();
+    let mut instruction = instruction.split(" ").collect::<Vec<&str>>();
 
-    let operation = instruction_vector.pop().unwrap();
-    let label = instruction_vector.pop().unwrap_or("");
+    // If there's anything left, it's the label
+    let label = line.pop().unwrap_or("");
+
+    // Remove the operation from the instruction vector
+    let operation = instruction.remove(0);
+
+    // If there's anything left, it's the operands string
+    let operands = instruction.pop().unwrap_or("");
+
+    // Create an empty vector if the operands string is empty
+    // Fill it if the operands string is not empty
+    let mut operands_vector = vec![""; 0];
+    if operands != "" {
+      operands_vector = operands.split(",").collect::<Vec<&str>>();
+    }
 
     Instruction {
-        raw: instruction,
+        raw: raw,
         label: label,
         operation: operation,
         operands: operands_vector
@@ -39,13 +55,14 @@ pub fn assemble<'a>(program: &'a str) -> MachineCode<'a> {
     let mut label_locations = HashMap::new();
 
     for (index, line) in instruction_iterator.enumerate() {
-        println!("{}", line);
         let instruction = parse_instruction(line);
         if instruction.label != "" {
           label_locations.insert(instruction.label, index);
         }
 
-        instructions.push(instruction);
+        if instruction.raw != "" {
+          instructions.push(instruction);
+        }
 
     }
     MachineCode {
@@ -59,21 +76,94 @@ mod tests {
   use super::*;
 
   #[test]
-  fn can_assemble() {
-      let program = "ldi r0,$0f\nspecial inc r0";
+  fn can_assemble_op_no_args() {
+      let program = "nop";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("", instruction.label);
+      assert_eq!("nop", instruction.operation);
+      assert_eq!(0, instruction.operands.len());
+  }
+
+  #[test]
+  fn can_assemble_labeled_op_no_args() {
+      let program = "redo: nop";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("redo", instruction.label);
+      assert_eq!("nop", instruction.operation);
+      assert_eq!(0, instruction.operands.len());
+  }
+
+  #[test]
+  fn can_assemble_op_single_arg() {
+      let program = "inc r0";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("", instruction.label);
+      assert_eq!("inc", instruction.operation);
+      assert_eq!(vec!["r0"], instruction.operands);
+  }
+  #[test]
+  fn can_assemble_labeled_op_single_arg() {
+      let program = "redo: inc r0";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("redo", instruction.label);
+      assert_eq!("inc", instruction.operation);
+      assert_eq!(vec!["r0"], instruction.operands);
+  }
+
+  #[test]
+  fn can_assemble_op_dual_arg() {
+      let program = "add r1,r2";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("", instruction.label);
+      assert_eq!("add", instruction.operation);
+      assert_eq!(vec!["r1", "r2"], instruction.operands);
+  }
+  #[test]
+  fn can_assemble_labeled_op_dual_arg() {
+      let program = "redo: add r1,r2";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("redo", instruction.label);
+      assert_eq!("add", instruction.operation);
+      assert_eq!(vec!["r1", "r2"], instruction.operands);
+  }
+
+  #[test]
+  fn ignores_leading_and_trailing_whitespace() {
+      let program = " redo: add r1,r2 ";
+      let machine_code = assemble(program);
+
+      let instruction = &machine_code.instructions[0];
+      assert_eq!("redo", instruction.label);
+      assert_eq!("add", instruction.operation);
+      assert_eq!(vec!["r1", "r2"], instruction.operands);
+  }
+
+  #[test]
+  fn skips_empty_lines() {
+      let program = " ";
+      let machine_code = assemble(program);
+
+      assert_eq!(machine_code.instructions.len(), 0);
+  }
+
+  #[test]
+  fn can_track_label_locations() {
+      let program = "ldi r0,$0f\nspecial: inc r0";
       let machine_code = assemble(program);
 
       assert_eq!(machine_code.instructions.len(), 2);
-
-      let ldi = &machine_code.instructions[0];
-      assert_eq!("", ldi.label);
-      assert_eq!("ldi", ldi.operation);
-      assert_eq!(vec!["r0","$0f"], ldi.operands);
-
-      let inc = &machine_code.instructions[1];
-      assert_eq!("special", inc.label);
-      assert_eq!("inc", inc.operation);
-      assert_eq!(vec!["r0"], inc.operands);
 
       let labels = &machine_code.label_locations;
       assert_eq!(labels.get("special"), Some(&1usize));
