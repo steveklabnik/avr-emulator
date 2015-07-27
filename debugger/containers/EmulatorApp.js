@@ -30,12 +30,19 @@ export default class EmulatorApp {
                 <p>
                   Inspired by&nbsp;
                   <a href="http://sockpuppet.org/blog/2015/07/13/starfighter/">
-                    Starfighters Summer 2015 announcement</a>,
-                    we thought implementing our own Emulator would be a great problem to tackle
-                    to dive a little deeper into with a few technologies
-                    we wanted to get our hands on.
-                    During our last biweekly hack day,
-                    we dove in and few days later, we had a barebones working version.
+                    Starfighters Summer 2015 announcement
+                  </a>,
+                  we thought that implementing our own&nbsp;
+                  <a href="http://www.atmel.com/images/atmel-0856-avr-instruction-set-manual.pdf">
+                    Atmel AVR 8-bit
+                  </a>
+                  &nbsp;emulator would be a pretty fun problem to tackle.
+                  During our last&nbsp;
+                  <a href="https://twitter.com/chrisconley/status/618830194971774976">
+                    biweekly hack day
+                  </a>
+                  &nbsp;we dove in with a few technologies we have had our eyes on
+                  and pushed out the first version.
                 </p>
               </div>
             </div>
