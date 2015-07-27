@@ -7,8 +7,8 @@ export default class RegisterState {
     const { instructions, programPointer } = this.props;
 
     var assignClasses = function assignClasses(i) {
-      return classnames('test', {
-        'current-step': i === programPointer
+      return classnames('line', {
+        'current-step': i === programPointer 
       })
     }
 
