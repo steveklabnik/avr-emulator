@@ -21,7 +21,7 @@ From Redux's docs, a reducer is:
 (previousState, action) => newState
 ```
 
-In the emulator, this becomes:
+In the emulator, `previousState` and `newState` is the current representation of bits in the Registers, IO, and SRAM. The action is the next instruction (ex: `inc r1`):
 
 ```
 (previousEmulatorState, instruction) => newEmulatorState
