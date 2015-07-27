@@ -1,9 +1,12 @@
 .program-display {
+	.line {
+	    transition: all .1s linear;
+	}
 	.current-step {
 		background-color: $hoverBlue;
 		width: 100%;
-		$testName = '.current-step';
+	    transition: all .3s linear;	
 
-		@include ofOffStates($testName);ß[]
+		// @include onOffStates($testName);
 	}
 }
