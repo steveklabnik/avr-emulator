@@ -52,6 +52,6 @@ There is still a lot of ground to cover - here's what's top of mind:
 * Refactor instruction parsing (opcodes are currently handling operand parsing in `.perform` - tsk tsk).
 * Get frontend testing up and running
 
-## Misc
+## About RealScout
 
-Original [HackPad doc](https://hackpad.com/Atmel-AVR-Emulator-oInhZ8NzxKG)
+We [pair program](http://eatcodeplay.com/why-we-killed-off-code-reviews/), hold [hack days](https://twitter.com/chrisconley/status/618830194971774976) every other Friday and have recently improved **test coverage** from **45% to 80%**. The focus seems to be paying off: Our agents have closed **$440 million** in sales with RealScout over the last 6 months. 
