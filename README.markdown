@@ -69,6 +69,7 @@ There is still a lot of ground to cover - here's what's top of mind:
 
 * Opcode coverage - there is a base of [7 opcodes](https://github.com/RealScout/avr-emulator/tree/master/server/src/opcodes), but there are ~150 to go!
 * Add SRAM memory display to [EmulatorApp](https://github.com/RealScout/avr-emulator/blob/master/debugger/containers/EmulatorApp.js).
+* Display all IO registers.
 * Render ATmega8515 in debugger with buttons and LEDS based on DDRA, DDRB and DDRC port configuration.
 * Ability to load arbitrary assembly programs into the emulator.
 * Add dissassembly to [assembler](https://github.com/RealScout/avr-emulator/blob/master/server/src/assembler.rs).
