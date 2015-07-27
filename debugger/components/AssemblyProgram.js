@@ -8,7 +8,7 @@ export default class RegisterState {
 
     var assignClasses = function assignClasses(i) {
       return classnames('test', {
-        'current-step': i === programPointer 
+        'current-step': i === programPointer
       })
     }
 

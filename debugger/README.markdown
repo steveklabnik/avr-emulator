@@ -4,12 +4,14 @@
 
 ```
 git co master
+cd debugger
 ./node_modules/webpack/bin/webpack.js --config webpack-production.config.js
 ```
 
 ### Update `gh-pages` branch
 
 ```
+cd ../
 git co gh-pages
 git co master -- debugger/index.html
 mv debugger/index.html ./
