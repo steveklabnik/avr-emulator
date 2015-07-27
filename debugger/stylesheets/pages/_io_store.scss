@@ -1,8 +1,12 @@
-.io-num {
-	color: grey;
+.io-store{
+	font-size: 90%;
 
-	&.current-store {
-		color: blue;
+	.io-num {
+		color: grey;
+
+		&.current-store {
+			color: blue;
+		}
 	}
 }
 
