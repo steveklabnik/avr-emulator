@@ -11,6 +11,18 @@ This is an Atmel 8-bit AVR Emulator written in Rust with a React frontend for re
 
 Inspired by [Starfighter's Summer 2015 announcement](http://sockpuppet.org/blog/2015/07/13/starfighter/), we thought implementing our own Emulator would be a great problem to tackle to dive a little deeper into with a few technologies we wanted to get our hands on. During our last biweekly hack day, we dove in and few days later, we had a barebones working version.
 
+## Reducers
+
+We've fallen in love with [redux's](https://github.com/gaearon/redux) reducers, so we decided to take them to the server as well.
+
+From Redux's docs, a reducer is:
+
+```
+(previousState, action) => newState
+```
+
+<img src="https://s3.amazonaws.com/uploads.hipchat.com/65625/949611/xi6FKFfeeXLYsjI/Rust-React%20Emulator.png"/>
+
 ## Development
 
 #### Requirements
