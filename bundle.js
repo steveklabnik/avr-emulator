@@ -22318,7 +22318,7 @@
 
 	var _actionsDebuggerActions = __webpack_require__(190);
 
-	var socket = new WebSocket("ws://72.2.112.220:8000", "rust-websocket");
+	var socket = new WebSocket("ws://72.2.112.229:8000", "rust-websocket");
 
 	exports.socket = socket;
 
