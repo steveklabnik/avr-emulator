@@ -53,12 +53,6 @@ Navigate to http://localhost:3000/index.html
 
 ## Testing
 
-From within the `./debugger` directory
-
-``` bash
-npm test
-```
-
 From within the `./server` directory
 
 ``` bash
@@ -67,7 +61,7 @@ cargo test
 
 ## Wish List
 
-There are still a lot of ground to cover - here's what's top of mind:
+There is still a lot of ground to cover - here's what's top of mind:
 
 * Opcode coverage - there is a base of [7 opcodes](https://github.com/RealScout/avr-emulator/tree/master/server/src/opcodes), but there are ~150 to go!
 * Add SRAM memory display to [EmulatorApp](https://github.com/RealScout/avr-emulator/blob/master/debugger/containers/EmulatorApp.js).
